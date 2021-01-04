@@ -11,7 +11,7 @@ PMPERMIT_MESSAGE = (
     "`Please wait for my Master to come back Online.\n\n`"
     "`Until then, Don't spam, Or you'll get blocked and reported!`")
 
-BLOCKED = "`Guess Those Who Deserve To Be Assaulted By Blows From One's Feet , They Refuse To Listen To The Words Of One's Mouth Blocked Successfully `"
+BLOCKED = "`Guess You're A Spammer, Blocked Successfully `"
 
 LIMIT = 5
 
