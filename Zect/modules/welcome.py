@@ -5,11 +5,15 @@ from Zect.helpers.pyrohelper import get_arg
 import Zect.database.welcomedb as Zectdb
 from config import PREFIX, LOG_CHAT
 
-CMD_HELP.update({"Greetings": """
+CMD_HELP.update(
+    {
+        "Greetings": """
 『 **Greetings** 』
   `welcome` [on or off] -> Activates or deactivates welcome.
   `setwelcome` -> Sets a custom welcome message.
-  """})
+  """
+    }
+)
 
 LOG_CHAT = LOG_CHAT
 
@@ -21,21 +25,50 @@ async def send_welcome(client, message):
         msg = await app.get_messages(LOG_CHAT, content)
         if msg.caption:
             caption = msg.caption
-            if '{mention}' in caption:
+            if "{mention}" in caption:
                 men = caption.replace("{mention}", "[{}](tg://user?id={})")
         if msg.photo and caption is not None:
-            await app.send_photo(message.chat.id, msg.photo.file_id, caption=men.format(message.new_chat_members[0]["first_name"], message.new_chat_members[0]["id"]), reply_to_message_id=message.message_id)
+            await app.send_photo(
+                message.chat.id,
+                msg.photo.file_id,
+                caption=men.format(
+                    message.new_chat_members[0]["first_name"],
+                    message.new_chat_members[0]["id"],
+                ),
+                reply_to_message_id=message.message_id,
+            )
         if msg.animation and caption is not None:
-            await app.send_animation(message.chat.id, msg.animation.file_id, caption=men.format(message.new_chat_members[0]["first_name"], message.new_chat_members[0]["id"]), reply_to_message_id=message.message_id)
+            await app.send_animation(
+                message.chat.id,
+                msg.animation.file_id,
+                caption=men.format(
+                    message.new_chat_members[0]["first_name"],
+                    message.new_chat_members[0]["id"],
+                ),
+                reply_to_message_id=message.message_id,
+            )
         if msg.sticker:
-            await app.send_sticker(message.chat.id, msg.sticker.file_id, reply_to_message_id=message.message_id)
+            await app.send_sticker(
+                message.chat.id,
+                msg.sticker.file_id,
+                reply_to_message_id=message.message_id,
+            )
 
     else:
-        if '{mention}' in content:
+        if "{mention}" in content:
             men = content.replace("{mention}", "[{}](tg://user?id={})")
-            await app.send_message(message.chat.id, men.format(message.new_chat_members[0]["first_name"], message.new_chat_members[0]["id"]), reply_to_message_id=message.message_id)
+            await app.send_message(
+                message.chat.id,
+                men.format(
+                    message.new_chat_members[0]["first_name"],
+                    message.new_chat_members[0]["id"],
+                ),
+                reply_to_message_id=message.message_id,
+            )
         else:
-            await app.send_message(message.chat.id, content, reply_to_message_id=message.message_id)
+            await app.send_message(
+                message.chat.id, content, reply_to_message_id=message.message_id
+            )
 
 
 @app.on_message(filters.command("welcome", PREFIX) & filters.me)

@@ -5,14 +5,18 @@ from Zect.helpers.pyrohelper import get_arg
 import Zect.database.notesdb as Zect
 from config import PREFIX, LOG_CHAT
 
-CMD_HELP.update({"Notes": """
+CMD_HELP.update(
+    {
+        "Notes": """
 『 **Notes** 』
   `save` -> Save a new note. Must be used in reply with one parameter (note name).
   `get` -> Gets the note specified.
   `clear` -> Deletes a note, specified by note name.
   `clearall` -> Deletes all the saved notes.
   `notes` -> List the saved notes.
-"""})
+"""
+    }
+)
 
 LOG_CHAT = LOG_CHAT
 

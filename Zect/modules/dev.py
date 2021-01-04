@@ -9,11 +9,15 @@ from Zect import app, CMD_HELP
 from pyrogram import filters
 
 
-CMD_HELP.update({"Developer": """
+CMD_HELP.update(
+    {
+        "Developer": """
 『 **Developer** 』
   `eval` -> A nice tool to test python codes.
   `term` -> Run commands in shell.
-"""})
+"""
+    }
+)
 
 
 async def aexec(code, client, message):
@@ -57,7 +61,7 @@ async def evaluate(client, message):
         evaluation = stdout
     else:
         evaluation = "Success"
-    final_output = f"<b>Command:</b>\n<code>{cmd}</code><b>OUTPUT</b>:\n<code>{evaluation.strip()}</code>"
+    final_output = f"<b>Command:</b>\n<code>{cmd}</code>\n\n<b>OUTPUT</b>:\n<code>{evaluation.strip()}</code>"
     if len(final_output) > 4096:
         filename = "output.txt"
         with open(filename, "w+", encoding="utf8") as out_file:

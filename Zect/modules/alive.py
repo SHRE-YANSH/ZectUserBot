@@ -9,11 +9,15 @@ from sys import version_info
 from pyrogram import __version__ as __pyro_version__
 from pyrogram.types import Message
 
-CMD_HELP.update({"Alive": """
+CMD_HELP.update(
+    {
+        "Alive": """
 『 **Alive** 』
   `alive` -> Show off to people with your bot using this command.
   `ping` -> Shows you the response speed of the bot.
-"""})
+"""
+    }
+)
 
 __major__ = 0
 __minor__ = 2
@@ -30,8 +34,7 @@ def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        remainder, result = divmod(
-            seconds, 60) if count < 3 else divmod(seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -57,7 +60,7 @@ async def alive(_, m):
     reply_msg += f"__@Pyrogram version__: `{__pyro_version__}`\n"
     end_time = time.time()
     reply_msg += f"__Zect uptime__: {uptime}"
-    photo = " https://telegra.ph//file/4cd49d9752dc4f7f3c95b.jpg"
+    photo = "https://telegra.ph//file/4cd49d9752dc4f7f3c95b.jpg"
     m.delete()
     await app.send_photo(m.chat.id, photo, caption=reply_msg)
 

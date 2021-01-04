@@ -5,14 +5,18 @@ from config import PREFIX
 from Zect.helpers.pyrohelper import get_arg
 
 
-HELP.update({"**Admin Tools**": "__ban, unban, kick, mute, unmute, pin, purge, del__",
-             "**AFK**": "__afk, unafk__",
-             "**Alive**": "__alive, ping__",
-             "**Developer**": "__eval, term__",
-             "**Misc**": "__paste, tr, whois, id__",
-             "**Notes**": "__save, get, clear, clearall, notes__",
-             "**Anti-PM**": "__pmgaurd, setpmmsg, setlimit, setblockmsg, allow, deny__",
-             "**Greetings**": "__welcome, setwelcome__"})
+HELP.update(
+    {
+        "**Admin Tools**": "__ban, unban, kick, mute, unmute, pin, purge, del__",
+        "**AFK**": "__afk, unafk__",
+        "**Alive**": "__alive, ping__",
+        "**Developer**": "__eval, term__",
+        "**Misc**": "__paste, tr, whois, id__",
+        "**Notes**": "__save, get, clear, clearall, notes__",
+        "**Anti-PM**": "__pmgaurd, setpmmsg, setlimit, setblockmsg, allow, deny__",
+        "**Greetings**": "__welcome, setwelcome__",
+    }
+)
 
 
 @app.on_message(filters.command("help", PREFIX) & filters.me)

@@ -9,11 +9,15 @@ from Zect.helpers.pyrohelper import user_afk
 from Zect.modules.alive import get_readable_time
 from Zect.helpers.utils import get_message_type, Types
 
-CMD_HELP.update({"AFK": """
+CMD_HELP.update(
+    {
+        "AFK": """
 『 **AFK** 』
   `afk [reason]` -> Provides a message saying that you are unavailable.
   `unafk` -> Remove the AFK status.
-"""})
+"""
+    }
+)
 
 LOG_CHAT = LOG_CHAT
 
@@ -45,11 +49,11 @@ async def afk(client, message):
         if len(msg_text) >= 11:
             msg_text = "{}...".format(x["text"])
         text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(
-                x["user"],
-                x["chat_id"],
-                x["message_id"],
-                x["chat"],
-                msg_text,
+            x["user"],
+            x["chat_id"],
+            x["message_id"],
+            x["chat"],
+            msg_text,
         )
         await app.send_message(LOG_CHAT, text)
         MENTIONED = []
@@ -65,15 +69,13 @@ async def afk_mentioned(_, message):
     else:
         cid = str(message.chat.id)
 
-    if cid in list(
-        AFK_RESTIRECT
-    ) and int(
-            AFK_RESTIRECT[cid]
-    ) >= int(time.time()):
+    if cid in list(AFK_RESTIRECT) and int(AFK_RESTIRECT[cid]) >= int(time.time()):
         return
     AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
     if reason:
-        await message.reply(f"**I'm AFK right now (since {afk_since})\nReason:** __{reason}__")
+        await message.reply(
+            f"**I'm AFK right now (since {afk_since})\nReason:** __{reason}__"
+        )
     else:
         await message.reply(f"**I'm AFK right now (since {afk_since})**")
 

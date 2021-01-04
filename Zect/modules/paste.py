@@ -6,16 +6,22 @@ from pyrogram.types import Message
 from Zect import app, CMD_HELP
 from config import PREFIX
 
-CMD_HELP.update({"Misc": """
+CMD_HELP.update(
+    {
+        "Misc": """
 『 **Misc** 』
   `paste` -> Paste replied content to nekobin.com.
   `tr` [lang code] -> Transalte a text to a given language.
   `whois` [user handle] -> Provides information about the user.
   `id` [user handle] -> Give user or chat id
-"""})
+"""
+    }
+)
 
 
-@app.on_message(filters.command(["neko", "nekobin", "bin", "paste"], PREFIX) & filters.me)
+@app.on_message(
+    filters.command(["neko", "nekobin", "bin", "paste"], PREFIX) & filters.me
+)
 async def paste(_, message: Message):
     text = message.reply_to_message.text
     try:

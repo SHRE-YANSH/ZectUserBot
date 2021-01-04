@@ -1,6 +1,5 @@
-
 from pymongo import settings
-from .import cli
+from . import cli
 
 collection = cli["Zect"]["pmpermit"]
 
@@ -9,7 +8,8 @@ PMPERMIT_MESSAGE = (
     "`Ok! Stop Right there Read this first before sending any new messages.\n\n`"
     "`I'm a bot Protecting this user's PM from any kind of Spam.`"
     "`Please wait for my Master to come back Online.\n\n`"
-    "`Until then, Don't spam, Or you'll get blocked and reported!`")
+    "`Until then, Don't spam, Or you'll get blocked and reported!`"
+)
 
 BLOCKED = "`Guess You're A Spammer, Blocked Successfully `"
 
@@ -44,7 +44,7 @@ def get_pm_settings():
     pmpermit = result["pmpermit"]
     pm_message = result.get("pmpermit_message", PMPERMIT_MESSAGE)
     block_message = result.get("block_message", BLOCKED)
-    limit = result.get('limit', LIMIT)
+    limit = result.get("limit", LIMIT)
     return pmpermit, pm_message, limit, block_message
 
 
@@ -53,7 +53,7 @@ def allow_deny(chat, value):
 
 
 def get_allowed_chat(chat):
-    pm_on, msg, limit = get_pm_settings()
+    pm_on, msg, limit, block_msg = get_pm_settings()
     if pm_on:
         doc = {"_id": chat, "allow": False}
     else:

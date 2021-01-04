@@ -11,7 +11,9 @@ from Zect.helpers.pyrohelper import get_arg
 from Zect.helpers.adminhelpers import CheckAdmin
 from config import PREFIX
 
-CMD_HELP.update({"Admin Tools": """
+CMD_HELP.update(
+    {
+        "Admin Tools": """
 『 **Admin Tools** 』
   `ban` -> Bans user indefinitely.
   `unban` -> Unbans the user.
@@ -21,7 +23,9 @@ CMD_HELP.update({"Admin Tools": """
   `pin` -> pins a message.
   `del` -> delete a message.
   `purge` -> purge message(s)
-"""})
+"""
+    }
+)
 
 
 @app.on_message(filters.command("ban", PREFIX) & filters.me)
@@ -59,9 +63,7 @@ async def unban(_, message: Message):
                 return
         try:
             get_user = await app.get_users(user)
-            await app.unban_chat_member(
-                chat_id=message.chat.id, user_id=get_user.id
-            )
+            await app.unban_chat_member(chat_id=message.chat.id, user_id=get_user.id)
             await message.edit(f"{get_user.first_name} was unbanned.")
         except UserAdminInvalid:
             await message.edit("I can't unban this user.")
