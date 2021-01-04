@@ -70,10 +70,10 @@ async def setpmmsg(client, message):
         await message.edit("**What message to set**")
         return
     if arg == "default":
-        Zectdb.set_permit_message(Zectdb.BLOCKED)
+        Zectdb.set_block_message(Zectdb.BLOCKED)
         await message.edit("**Block message set to default**.")
         return
-    Zectdb.set_permit_message(f"`{arg}`")
+    Zectdb.set_block_message(f"`{arg}`")
     await message.edit("**Custom block message set**")
 
 
@@ -92,7 +92,8 @@ async def deny(client, message):
 
 
 @app.on_message(
-    filters.create(denied_users) & filters.incoming & filters.private & ~filters.me
+    filters.create(
+        denied_users) & filters.incoming & filters.private & ~filters.me
 )
 async def reply_pm(client, message):
     global FLOOD_CTRL
@@ -111,8 +112,8 @@ async def reply_pm(client, message):
             chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
         ):
             await message.delete()
-        await message.reply(pm_message)
+        await message.reply(pm_message, disable_web_page_preview=True)
         return
-    await message.reply(block_message)
+    await message.reply(block_message, disable_web_page_preview=True)
     await app.block_user(message.chat.id)
     USERS_AND_WARNS.update({user: 0})

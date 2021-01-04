@@ -49,7 +49,7 @@ def get_pm_settings():
 
 
 def allow_deny(chat, value):
-    collection.update_one({"_id": chat}, {"$set": {"allow": value, "pms": 0}})
+    collection.update_one({"_id": chat}, {"$set": {"allow": value}})
 
 
 def get_allowed_chat(chat):
