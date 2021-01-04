@@ -55,9 +55,9 @@ def allow_deny(chat, value):
 def get_allowed_chat(chat):
     pm_on, msg, limit = get_pm_settings()
     if pm_on:
-        doc = {"_id": chat, "allow": False, "pms": 0}
+        doc = {"_id": chat, "allow": False}
     else:
-        doc = {"_id": chat, "allow": True, "pms": 0}
+        doc = {"_id": chat, "allow": True}
     r = collection.find_one({"_id": chat})
     if not r:
         collection.insert_one(doc)
