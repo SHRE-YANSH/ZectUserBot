@@ -8,8 +8,7 @@ import Zect.database.pmpermitdb as Zectdb
 from config import PREFIX
 
 CMD_HELP.update(
-    {
-        "Anti-PM": """
+    {"Anti-PM": """
 『 **Anti-PM** 』
   `pmgaurd` [on or off] -> Activates or deactivates anti-pm.
   `setpmmsg` [message or default] -> Sets a custom anti-pm message.
@@ -18,7 +17,7 @@ CMD_HELP.update(
   `allow` -> Allows a user to PM you.
   `deny` -> Denies a user to PM you.
   """
-    }
+     }
 )
 
 FLOOD_CTRL = 0
@@ -92,19 +91,15 @@ async def deny(client, message):
 
 
 @app.on_message(
-<<<<<<< HEAD
     filters.create(
         denied_users) & filters.incoming & filters.private & ~filters.me
-=======
-    filters.private & filters.create(denied_users) & filters.incoming & ~filters.me
->>>>>>> 37b1f01a4d0963a900f3db157f5e0a6e819f84c4
 )
 async def reply_pm(client, message):
     global FLOOD_CTRL
     pmpermit, pm_message, limit, block_message = Zectdb.get_pm_settings()
     user = message.from_user.id
     user_warns = 0 if user not in USERS_AND_WARNS else USERS_AND_WARNS[user]
-    if user_warns <= limit - 2:
+    if user_warns <= await limit - 2:
         user_warns += 1
         USERS_AND_WARNS.update({user: user_warns})
         if not FLOOD_CTRL > 0:
@@ -112,7 +107,7 @@ async def reply_pm(client, message):
         else:
             FLOOD_CTRL = 0
             return
-        async for message in app.search_messages(
+        async for message in await app.search_messages(
             chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
         ):
             await message.delete()
