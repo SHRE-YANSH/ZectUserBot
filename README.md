@@ -2,7 +2,7 @@
 # Zect
 Just another telegram userbot, written in Python using the [Pyrogram](https://github.com/pyrogram/pyrogram) library
 
-
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/okay-retard/ZectUserBot)
 
 *How to run this bot*
 - `git clone https://github.com/okay-retard/ZectUserBot`

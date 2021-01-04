@@ -49,18 +49,17 @@ def get_readable_time(seconds: int) -> str:
 
 
 @app.on_message(filters.command("alive", PREFIX) & filters.me)
-def alive(_, m):
+async def alive(_, m):
     start_time = time.time()
     uptime = get_readable_time((time.time() - StartTime))
     reply_msg = f"**Zect**\n"
-    reply_msg += f"   **Python**: `{__python_version__}`\n"
-    reply_msg += f"   **@Pyrogram version**: `{__pyro_version__}`\n"
+    reply_msg += f"__Python__: `{__python_version__}`\n"
+    reply_msg += f"__@Pyrogram version__: `{__pyro_version__}`\n"
     end_time = time.time()
-    reply_msg += f"   **Zect uptime**: {uptime}"
-    sticker_id = "CAACAgIAAx0EQgjcswACJoxf8ydu0GJHCvXkgUuMbqVmkr0yDQACqgoAAk2BmUsAAdA7y1HfmWUeBA"
+    reply_msg += f"__Zect uptime__: {uptime}"
+    photo = " https://telegra.ph//file/4cd49d9752dc4f7f3c95b.jpg"
     m.delete()
-    await app.send_sticker(m.chat.id, sticker_id)
-    await app.send_message(m.chat.id, reply_msg)
+    await app.send_photo(m.chat.id, photo, caption=reply_msg)
 
 
 @app.on_message(filters.command("ping", PREFIX) & filters.me)
