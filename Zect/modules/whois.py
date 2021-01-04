@@ -26,7 +26,6 @@ infotext = (
     " > First Name: `{first_name}`\n"
     " > Last Name: `{last_name}`\n"
     " > Username: `{username}`\n"
-    " > Bio: {bio}"
 )
 
 
@@ -60,8 +59,7 @@ async def whois(client, message):
             user_id=user.id,
             first_name=user.first_name,
             last_name=user.last_name or "",
-            username=user.username or "",
-            bio=desc or "`No bio set up.`",
+            username=user.username or ""
         ),
         disable_web_page_preview=True,
     )
@@ -84,7 +82,7 @@ async def id(client, message):
     try:
         user = await client.get_users(get_user)
     except PeerIdInvalid:
-        await message.reply("I don't know that User.")
+        await message.edit("I don't know that User.")
         return
     text = "**User ID**: `{}`\n**Chat ID**: `{}`".format(user.id, chat_id)
-    await message.reply(text)
+    await message.edit(text)

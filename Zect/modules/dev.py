@@ -92,7 +92,7 @@ async def terminal(client, message):
                 )
             except Exception as err:
                 print(err)
-                await message.reply(
+                await message.edit(
                     """
 **Error:**
 ```{}```
@@ -116,23 +116,23 @@ async def terminal(client, message):
             errors = traceback.format_exception(
                 etype=exc_type, value=exc_obj, tb=exc_tb
             )
-            await message.reply("""**Error:**\n```{}```""".format("".join(errors)))
+            await message.edit("""**Error:**\n```{}```""".format("".join(errors)))
             return
         output = process.stdout.read()[:-1].decode("utf-8")
     if str(output) == "\n":
         output = None
     if output:
         if len(output) > 4096:
-            with open("nana/cache/output.txt", "w+") as file:
+            with open("output.txt", "w+") as file:
                 file.write(output)
             await client.send_document(
                 message.chat.id,
-                "nana/cache/output.txt",
+                "output.txt",
                 reply_to_message_id=message.message_id,
                 caption="`Output file`",
             )
-            os.remove("nana/cache/output.txt")
+            os.remove("output.txt")
             return
-        await message.reply(f"**Output:**\n```{output}```", parse_mode="markdown")
+        await message.edit(f"**Output:**\n```{output}```", parse_mode="markdown")
     else:
-        await message.reply("**Output:**\n`No Output`")
+        await message.edit("**Output:**\n`No Output`")
