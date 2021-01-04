@@ -57,9 +57,10 @@ def alive(_, m):
     reply_msg += f"   **@Pyrogram version**: `{__pyro_version__}`\n"
     end_time = time.time()
     reply_msg += f"   **Zect uptime**: {uptime}"
-    photo = "https://telegra.ph//file/dcd069c3eb26c9fa3011d.jpg"
+    sticker_id = "CAACAgIAAx0EQgjcswACJoxf8ydu0GJHCvXkgUuMbqVmkr0yDQACqgoAAk2BmUsAAdA7y1HfmWUeBA"
     m.delete()
-    app.send_photo(m.chat.id, photo, caption=reply_msg)
+    await app.send_sticker(m.chat.id, sticker_id)
+    await app.send_message(m.chat.id, reply_msg)
 
 
 @app.on_message(filters.command("ping", PREFIX) & filters.me)
