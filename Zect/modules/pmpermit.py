@@ -92,14 +92,14 @@ async def deny(client, message):
 
 
 @app.on_message(
-    filters.private & filters.incoming & filters.create(denied_users) & ~filters.me
+    filters.private & filters.create(denied_users) & filters.incoming & ~filters.me
 )
 async def reply_pm(client, message):
     global FLOOD_CTRL
     pmpermit, pm_message, limit, block_message = Zectdb.get_pm_settings()
     user = message.from_user.id
     user_warns = 0 if user not in USERS_AND_WARNS else USERS_AND_WARNS[user]
-    if user_warns <= await limit - 2:
+    if user_warns <= limit - 2:
         user_warns += 1
         USERS_AND_WARNS.update({user: user_warns})
         if not FLOOD_CTRL > 0:
