@@ -61,8 +61,8 @@ async def alive(_, m):
     reply_msg += f"__@Pyrogram version__: `{__pyro_version__}`\n"
     end_time = time.time()
     reply_msg += f"__Zect uptime__: {uptime}"
-    photo = "https://telegra.ph//file/4cd49d9752dc4f7f3c95b.jpg"
-    m.delete()
+    photo = "https://telegra.ph//file/dcd069c3eb26c9fa3011d.jpg"
+    await m.delete()
     await app.send_photo(m.chat.id, photo, caption=reply_msg)
 
 
