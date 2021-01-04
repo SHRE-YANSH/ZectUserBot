@@ -46,6 +46,7 @@ async def pmgaurd(client, message):
         await message.edit("**Set limit to what?**")
         return
     Zectdb.set_limit(int(arg))
+    await message.edit(f"**Limit set to {arg}**")
 
 
 @app.on_message(filters.command("setpmmsg", PREFIX) & filters.me)
