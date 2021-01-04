@@ -111,8 +111,8 @@ async def reply_pm(client, message):
             chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
         ):
             await message.delete()
-        await message.reply(pm_message)
+        await message.reply(pm_message, disable_web_page_preview=True)
         return
-    await message.reply(block_message)
+    await message.reply(block_message, disable_web_page_preview=True)
     await app.block_user(message.chat.id)
     USERS_AND_WARNS.update({user: 0})
