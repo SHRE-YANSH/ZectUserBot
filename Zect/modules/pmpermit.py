@@ -99,7 +99,7 @@ async def reply_pm(client, message):
     pmpermit, pm_message, limit, block_message = Zectdb.get_pm_settings()
     user = message.from_user.id
     user_warns = 0 if user not in USERS_AND_WARNS else USERS_AND_WARNS[user]
-    if user_warns <= await limit - 2:
+    if user_warns <= limit - 2:
         user_warns += 1
         USERS_AND_WARNS.update({user: user_warns})
         if not FLOOD_CTRL > 0:
@@ -107,7 +107,7 @@ async def reply_pm(client, message):
         else:
             FLOOD_CTRL = 0
             return
-        async for message in await app.search_messages(
+        async for message in app.search_messages(
             chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
         ):
             await message.delete()
