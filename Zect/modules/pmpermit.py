@@ -92,7 +92,7 @@ async def deny(client, message):
 
 
 @app.on_message(
-    filters.private & filters.create(denied_users) & filters.incoming & ~filters.me
+    filters.private & filters.incoming & filters.create(denied_users) & ~filters.me
 )
 async def reply_pm(client, message):
     global FLOOD_CTRL
