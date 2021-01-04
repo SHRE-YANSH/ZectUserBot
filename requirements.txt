@@ -1,0 +1,4 @@
+pyrogram
+tgcrypto
+aiohttp==3.6.2
+googletrans==3.0.0
