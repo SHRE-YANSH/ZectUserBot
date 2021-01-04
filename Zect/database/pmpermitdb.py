@@ -45,7 +45,7 @@ def get_pm_settings():
     pm_message = result.get("pmpermit_message", PMPERMIT_MESSAGE)
     block_message = result.get("block_message", BLOCKED)
     limit = result.get('limit', LIMIT)
-    return pmpermit, pm_message, limit
+    return pmpermit, pm_message, limit, block_message
 
 
 def allow_deny(chat, value):
