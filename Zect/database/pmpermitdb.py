@@ -6,12 +6,12 @@ collection = cli["Zect"]["pmpermit"]
 
 
 PMPERMIT_MESSAGE = (
-    "`Hello! This is an automated message.\n\n`"
-    "`I haven't approved you to PM yet.`"
-    "`Please wait for me to look in, I mostly approve PMs.\n\n`"
-    "`Until then, please don't spam my PM, you'll get blocked and reported!`")
+    "`Ok! Stop Right there Read this first before sending any new messages.\n\n`"
+    "`I'm a bot Protecting this user's PM from any kind of Spam.`"
+    "`Please wait for my Master to come back Online.\n\n`"
+    "`Until then, Don't spam, Or you'll get blocked and reported!`")
 
-BLOCKED = "`I don't want any PM from so you have been blocked !`"
+BLOCKED = "`Guess Those Who Deserve To Be Assaulted By Blows From One's Feet , They Refuse To Listen To The Words Of One's Mouth Blocked Successfully `"
 
 LIMIT = 5
 
