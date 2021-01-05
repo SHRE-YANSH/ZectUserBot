@@ -1,7 +1,6 @@
-from pyrogram import idle, Client
+from pyrogram import idle, Client, filters
 from Zect import app, LOGGER
 from Zect.modules import *
 
-app.start()
-LOGGER.info("Your Zect UserBot is ready for use type .help in any telegram chat.")
-idle()
+print("Your Zect UserBot is now ready. Type .help in any telegram chat.")
+app.run()

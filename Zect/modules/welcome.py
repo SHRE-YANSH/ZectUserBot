@@ -1,3 +1,4 @@
+import re
 from pyrogram import filters
 
 from Zect import app, CMD_HELP
@@ -16,11 +17,28 @@ CMD_HELP.update(
 )
 
 LOG_CHAT = LOG_CHAT
+WELCOME_CHATS = Zectdb.get_welcome_chat()
 
 
-@app.on_message(filters.chat(Zectdb.get_welcome_chat()) & filters.new_chat_members)
+@app.on_message(filters.command("welcome", PREFIX) & filters.me)
+async def welcome(client, message):
+    arg = get_arg(message)
+    if not arg:
+        await message.edit("**I only understand on or off**")
+        return
+    if arg == "off":
+        Zectdb.welcome(message.chat.id, False)
+        await message.edit("**I am sulking not to say hello anymore :(**")
+    if arg == "on":
+        Zectdb.welcome(message.chat.id, True)
+        await message.edit("**I'll be polite**")
+
+
+@app.on_message(filters.chat(WELCOME_CHATS) & filters.new_chat_members)
 async def send_welcome(client, message):
-    media, content = Zectdb.get_welcome(message.chat.id)
+    media, content, welcome = Zectdb.get_welcome(message.chat.id)
+    if welcome is False:
+        return
     if media:
         msg = await app.get_messages(LOG_CHAT, content)
         if msg.caption:
@@ -71,20 +89,6 @@ async def send_welcome(client, message):
             )
 
 
-@app.on_message(filters.command("welcome", PREFIX) & filters.me)
-async def welcome(client, message):
-    arg = get_arg(message)
-    if not arg:
-        await message.edit("**I only understand on or off**")
-        return
-    if arg == "off":
-        Zectdb.welcome(message.chat.id, False)
-        await message.edit("**I am sulking not to say hello anymore :(**")
-    if arg == "on":
-        Zectdb.welcome(message.chat.id, True)
-        await message.edit("**I'll be polite**")
-
-
 @app.on_message(filters.command("setwelcome", PREFIX) & filters.me)
 async def setwelcome(client, message):
     Zectdb.welcome(message.chat.id, True)
@@ -100,7 +104,7 @@ async def setwelcome(client, message):
             caption = frwd.caption
     else:
         welcome_msg = get_arg(message)
-    if welcome_msg or media_id is None:
+    if not welcome_msg and not media_id:
         await message.edit("**You didn't specify what to reply with.**")
         return
     Zectdb.set_welcome(message.chat.id, welcome_msg, media_id)

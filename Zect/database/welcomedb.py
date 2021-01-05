@@ -30,8 +30,11 @@ def set_welcome(chat, welcome_message, media_id):
 def get_welcome(chat):
     r = collection.find_one({"_id": chat})
     is_media = False
-    if r["media_id"]:
-        is_media = True
-        return is_media, r["media_id"]
-    else:
-        return is_media, r["welcome_msg"]
+    try:
+        if r["media_id"]:
+            is_media = True
+            return is_media, r["media_id"], True
+        else:
+            return is_media, r["welcome_msg"], True
+    except:
+        return None, None, False

@@ -26,12 +26,12 @@
         "LOG_CHAT": {
             "description": "A private group id to store your logs.",
             "required": true
-        },
-        "formation": {
-            "worker": {
-                "quantity": 1,
-                "size": "free"
-            }
+        }
+    },
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
         }
     }
 }
