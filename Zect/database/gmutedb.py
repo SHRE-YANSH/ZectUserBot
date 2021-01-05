@@ -3,22 +3,22 @@ from . import cli
 collection = cli["Zect"]["gmute"]
 
 
-def gmute_user(chat: int):
-    doc = {"_id": chat, "gmute": True}
-    r = collection.find_one({"_id": chat})
+def gmute_user(chat):
+    doc = {"_id": "Gmute", "users": [chat]}
+    r = collection.find_one({"_id": "Gmute"})
     if r:
-        collection.update_one({"_id": chat}, {"$set": {"gmute": True}})
+        collection.update_one({"_id": "Gmute"}, {"$push": {"users": chat}})
     else:
         collection.insert_one(doc)
 
 
 def get_gmuted_users():
-    chats = []
-    results = collection.find({"gmute": True})
-    for result in results:
-        chats.append(result["_id"])
-    return chats
+    results = collection.find_one({"_id": "Gmute"})
+    if results:
+        return results["users"]
+    else:
+        return []
 
 
 def ungmute_user(chat):
-    collection.update_one({"_id": chat}, {"$set": {"gmute": False}})
+    collection.update_one({"_id": "Gmute"}, {"$pull": {"users": chat}})
