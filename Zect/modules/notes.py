@@ -79,7 +79,7 @@ async def notes(client, message):
         await message.edit("**No notes has been saved**")
         return
     for notes in all_notes:
-        msg += f"⇏ `{notes}`\n"
+        msg += f"◍ `{notes}`\n"
     await message.edit(msg)
 
 
