@@ -8,7 +8,8 @@ import Zect.database.pmpermitdb as Zectdb
 from config import PREFIX
 
 CMD_HELP.update(
-    {"Anti-PM": """
+    {
+        "Anti-PM": """
 『 **Anti-PM** 』
   `pmgaurd` [on or off] -> Activates or deactivates anti-pm.
   `setpmmsg` [message or default] -> Sets a custom anti-pm message.
@@ -17,7 +18,7 @@ CMD_HELP.update(
   `allow` -> Allows a user to PM you.
   `deny` -> Denies a user to PM you.
   """
-     }
+    }
 )
 
 FLOOD_CTRL = 0
@@ -92,8 +93,7 @@ async def deny(client, message):
 
 
 @app.on_message(
-    filters.private & filters.create(
-        denied_users) & filters.incoming & ~filters.me
+    filters.private & filters.create(denied_users) & filters.incoming & ~filters.me
 )
 async def reply_pm(client, message):
     global FLOOD_CTRL

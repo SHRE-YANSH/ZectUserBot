@@ -7,6 +7,7 @@ from pyrogram.errors import UserAdminInvalid
 from pyrogram.methods.chats.get_chat_members import Filters as ChatMemberFilters
 
 from Zect import app, CMD_HELP
+from Zect.database.gmutedb import get_gmuted_users, gmute_user
 from Zect.helpers.pyrohelper import get_arg
 from Zect.helpers.adminhelpers import CheckAdmin
 from config import PREFIX
@@ -20,6 +21,8 @@ CMD_HELP.update(
   `mute` -> Mutes user indefinitely.
   `unmute` -> Unmutes the user.
   `kick` -> Kicks the user out of the group.
+  `gmute` -> Doesn't lets a user speak(even admins).
+  `ungmute` -> Inverse of what gmute does.
   `pin` -> pins a message.
   `del` -> delete a message.
   `purge` -> purge message(s)

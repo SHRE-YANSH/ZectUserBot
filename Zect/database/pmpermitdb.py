@@ -1,4 +1,3 @@
-from pymongo import settings
 from . import cli
 
 collection = cli["Zect"]["pmpermit"]
