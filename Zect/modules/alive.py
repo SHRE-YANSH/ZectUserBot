@@ -55,7 +55,7 @@ def get_readable_time(seconds: int) -> str:
 async def alive(_, m):
     start_time = time.time()
     uptime = get_readable_time((time.time() - StartTime))
-    reply_msg = f"**Zect**\n"
+    reply_msg = f"**[Zect](https://github.com/okay-retard/ZectUserBot)**\n"
     reply_msg += f"__Python__: `{__python_version__}`\n"
     reply_msg += f"__@Pyrogram version__: `{__pyro_version__}`\n"
     end_time = time.time()
