@@ -40,6 +40,8 @@ async def gmute(_, message):
 
 @app.on_message(filters.group & filters.incoming)
 async def check_and_del(client, message):
+    if not message:
+        return
     if not message.from_user.id in get_gmuted_users():
         return
     message_id = message.message_id
