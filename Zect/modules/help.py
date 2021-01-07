@@ -1,4 +1,3 @@
-from typing import get_args
 from pyrogram import filters
 from Zect import app, HELP, CMD_HELP
 from config import PREFIX
