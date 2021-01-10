@@ -2,7 +2,6 @@ from . import cli
 
 collection = cli["Zect"]["pmpermit"]
 
-
 PMPERMIT_MESSAGE = (
     "`Ok! Stop Right there Read this first before sending any new messages.\n\n`"
     "`I'm a bot Protecting this user's PM from any kind of Spam.`"

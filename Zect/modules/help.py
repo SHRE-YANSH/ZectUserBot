@@ -3,7 +3,6 @@ from Zect import app, HELP, CMD_HELP
 from config import PREFIX
 from Zect.helpers.pyrohelper import get_arg
 
-
 HELP.update(
     {
         "**Admin Tools**": "__ban, unban, kick, mute, unmute, gmute, ungmute, pin, purge, del__",
@@ -12,7 +11,7 @@ HELP.update(
         "**Developer**": "__eval, term__",
         "**Misc**": "__paste, tr, whois, id__",
         "**Notes**": "__save, get, clear, clearall, notes__",
-        "**Anti-PM**": "__pmgaurd, setpmmsg, setlimit, setblockmsg, allow, deny__",
+        "**Anti-PM**": "__pmguard, setpmmsg, setlimit, setblockmsg, allow, deny__",
         "**Greetings**": "__welcome, setwelcome__",
     }
 )
