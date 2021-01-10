@@ -11,7 +11,7 @@ CMD_HELP.update(
     {
         "Anti-PM": """
 『 **Anti-PM** 』
-  `pmgaurd` [on or off] -> Activates or deactivates anti-pm.
+  `pmguard` [on or off] -> Activates or deactivates anti-pm.
   `setpmmsg` [message or default] -> Sets a custom anti-pm message.
   `setblockmsg` [message or default] -> Sets custom block message.
   `setlimit` [value] -> This one sets a max. message limit for unwanted PMs and when they go beyond it, bamm!.
@@ -26,22 +26,22 @@ ALLOWED = []
 USERS_AND_WARNS = {}
 
 
-@app.on_message(filters.command("pmgaurd", PREFIX) & filters.me)
-async def pmgaurd(client, message):
+@app.on_message(filters.command("pmguard", PREFIX) & filters.me)
+async def pmguard(client, message):
     arg = get_arg(message)
     if not arg:
         await message.edit("**I only understand on or off**")
         return
     if arg == "off":
         Zectdb.set_pm(False)
-        await message.edit("**PM Gaurd Deactivated**")
+        await message.edit("**PM Guard Deactivated**")
     if arg == "on":
         Zectdb.set_pm(True)
-        await message.edit("**PM Gaurd Activated**")
+        await message.edit("**PM Guard Activated**")
 
 
 @app.on_message(filters.command("setlimit", PREFIX) & filters.me)
-async def pmgaurd(client, message):
+async def pmguard(client, message):
     arg = get_arg(message)
     if not arg:
         await message.edit("**Set limit to what?**")
@@ -93,7 +93,7 @@ async def deny(client, message):
 
 
 @app.on_message(
-    filters.private & filters.create(denied_users) & filters.incoming & ~filters.me
+    filters.private & filters.create(denied_users) & filters.incoming & filters.text & ~filters.me & ~filters.bot
 )
 async def reply_pm(client, message):
     global FLOOD_CTRL
@@ -109,7 +109,7 @@ async def reply_pm(client, message):
             FLOOD_CTRL = 0
             return
         async for message in app.search_messages(
-            chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
+                chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
         ):
             await message.delete()
         await message.reply(pm_message, disable_web_page_preview=True)

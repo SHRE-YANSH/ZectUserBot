@@ -1,37 +1,37 @@
 {
-    "name": "Zect",
-    "description": "Zect, a telegram userbot with MongoDB database",
-    "env": {
-        "API_ID": {
-            "description": "Get this value from my.telegram.org.",
-            "required": true
-        },
-        "API_HASH": {
-            "description": "Get this value from my.telegram.org.",
-            "required": true
-        },
-        "SESSION": {
-            "description": "Get this value by running [python3 mysession.py] in Termux or local system.",
-            "required": true
-        },
-        "MONGO_URI": {
-            "description": "This is for the database account, you can obtain it from mongodb.com.",
-            "required": true
-        },
-        "PREFIX": {
-            "description": "Command handler.",
-            "required": true,
-            "vale": "."
-        },
-        "LOG_CHAT": {
-            "description": "A private group id to store your logs.",
-            "required": true
-        }
+  "name": "Zect",
+  "description": "Zect, a telegram userbot with MongoDB database",
+  "env": {
+    "API_ID": {
+      "description": "Get this value from my.telegram.org.",
+      "required": true
     },
-    "formation": {
-        "worker": {
-            "quantity": 1,
-            "size": "free"
-        }
+    "API_HASH": {
+      "description": "Get this value from my.telegram.org.",
+      "required": true
+    },
+    "SESSION": {
+      "description": "Get this value by running [python3 mysession.py] in Termux or local system.",
+      "required": true
+    },
+    "MONGO_URI": {
+      "description": "This is for the database account, you can obtain it from mongodb.com.",
+      "required": true
+    },
+    "PREFIX": {
+      "description": "Command handler.",
+      "required": true,
+      "vale": "."
+    },
+    "LOG_CHAT": {
+      "description": "A private group id to store your logs.",
+      "required": true
     }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
 }

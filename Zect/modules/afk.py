@@ -1,5 +1,6 @@
 import time
 from pyrogram import filters
+import asyncio
 
 from Zect import app, CMD_HELP
 from config import PREFIX, LOG_CHAT
@@ -95,3 +96,26 @@ async def afk_mentioned(_, message):
                 "message_id": message.message_id,
             }
         )
+
+
+@app.on_message(filters.outgoing & filters.create(user_afk))
+async def auto_unafk(_, message):
+    Zect.set_unafk()
+    unafk_message = await app.send_message(message.chat.id, "**I'm no longer AFK**")
+    global MENTIONED
+    text = "**Total {} mentioned you**\n".format(len(MENTIONED))
+    for x in MENTIONED:
+        msg_text = x["text"]
+        if len(msg_text) >= 11:
+            msg_text = "{}...".format(x["text"])
+        text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(
+            x["user"],
+            x["chat_id"],
+            x["message_id"],
+            x["chat"],
+            msg_text,
+        )
+        await app.send_message(LOG_CHAT, text)
+        MENTIONED = []
+    await asyncio.sleep(2)
+    await unafk_message.delete()

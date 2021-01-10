@@ -8,7 +8,6 @@ from io import StringIO
 from Zect import app, CMD_HELP
 from pyrogram import filters
 
-
 CMD_HELP.update(
     {
         "Developer": """

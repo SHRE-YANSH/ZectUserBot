@@ -40,7 +40,7 @@ async def purge_message(client, message):
     count_del_etion_s = 0
     if message.reply_to_message:
         for a_s_message_id in range(
-            message.reply_to_message.message_id, message.message_id
+                message.reply_to_message.message_id, message.message_id
         ):
             message_ids.append(a_s_message_id)
             if len(message_ids) == 100:
