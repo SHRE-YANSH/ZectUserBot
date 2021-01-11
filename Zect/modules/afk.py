@@ -40,7 +40,7 @@ async def afk(client, message):
 
 
 @app.on_message(filters.command("unafk", PREFIX) & filters.me)
-async def afk(client, message):
+async def unafk(client, message):
     Zect.set_unafk()
     global MENTIONED
     await message.edit("**I'm no longer AFK**")
