@@ -14,7 +14,7 @@ def get_arg(message):
 
 
 async def user_afk(filter, client: Client, message: Message):
-    check = get_afk_status()
+    check = await get_afk_status()
     if check:
         return True
     else:
@@ -22,10 +22,10 @@ async def user_afk(filter, client: Client, message: Message):
 
 
 async def denied_users(filter, client: Client, message: Message):
-    pmpermit, pm_message, limit, block_msg = get_pm_settings()
+    pmpermit, pm_message, limit, block_msg = await get_pm_settings()
     if not pmpermit:
         return False
-    if get_allowed_chat(message.chat.id):
+    if await get_allowed_chat(message.chat.id):
         return False
     else:
         return True

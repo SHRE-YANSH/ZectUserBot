@@ -35,35 +35,14 @@ async def afk(client, message):
         reason = None
     else:
         reason = arg
-    Zect.set_afk(True, afk_time, reason)
+    await Zect.set_afk(True, afk_time, reason)
     await message.edit("**I'm goin' AFK**")
-
-
-@app.on_message(filters.command("unafk", PREFIX) & filters.me)
-async def unafk(client, message):
-    Zect.set_unafk()
-    global MENTIONED
-    await message.edit("**I'm no longer AFK**")
-    text = "**Total {} mentioned you**\n".format(len(MENTIONED))
-    for x in MENTIONED:
-        msg_text = x["text"]
-        if len(msg_text) >= 11:
-            msg_text = "{}...".format(x["text"])
-        text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(
-            x["user"],
-            x["chat_id"],
-            x["message_id"],
-            x["chat"],
-            msg_text,
-        )
-        await app.send_message(LOG_CHAT, text)
-        MENTIONED = []
 
 
 @app.on_message(filters.mentioned & ~filters.bot & filters.create(user_afk), group=11)
 async def afk_mentioned(_, message):
     global MENTIONED
-    afk_time, reason = Zect.afk_stuff()
+    afk_time, reason = await Zect.afk_stuff()
     afk_since = get_readable_time(time.time() - afk_time)
     if "-" in str(message.chat.id):
         cid = str(message.chat.id)[4:]
@@ -98,9 +77,9 @@ async def afk_mentioned(_, message):
         )
 
 
-@app.on_message(filters.outgoing & filters.create(user_afk))
+@app.on_message(filters.create(user_afk) & filters.outgoing)
 async def auto_unafk(_, message):
-    Zect.set_unafk()
+    await Zect.set_unafk()
     unafk_message = await app.send_message(message.chat.id, "**I'm no longer AFK**")
     global MENTIONED
     text = "**Total {} mentioned you**\n".format(len(MENTIONED))

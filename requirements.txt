@@ -3,6 +3,7 @@ tgcrypto
 aiohttp==3.6.2
 google_trans_new
 pymongo
+motor
 dnspython
 requests
 asyncio

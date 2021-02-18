@@ -1,4 +1,5 @@
 from . import cli
+import asyncio
 
 collection = cli["Zect"]["pmpermit"]
 
@@ -13,6 +14,7 @@ BLOCKED = "`Guess You're A Spammer, Blocked Successfully `"
 
 LIMIT = 5
 
+
 doc = {"_id": 1, "pmpermit": False}
 r = collection.find_one({"_id": 1})
 if r:
@@ -21,24 +23,24 @@ else:
     collection.insert_one(doc)
 
 
-def set_pm(value: bool):
-    collection.update_one({"_id": 1}, {"$set": {"pmpermit": value}})
+async def set_pm(value: bool):
+    await collection.update_one({"_id": 1}, {"$set": {"pmpermit": value}})
 
 
-def set_permit_message(text):
-    collection.update_one({"_id": 1}, {"$set": {"pmpermit_message": text}})
+async def set_permit_message(text):
+    await collection.update_one({"_id": 1}, {"$set": {"pmpermit_message": text}})
 
 
-def set_block_message(text):
-    collection.update_one({"_id": 1}, {"$set": {"block_message": text}})
+async def set_block_message(text):
+    await collection.update_one({"_id": 1}, {"$set": {"block_message": text}})
 
 
-def set_limit(limit):
-    collection.update_one({"_id": 1}, {"$set": {"limit": limit}})
+async def set_limit(limit):
+    await collection.update_one({"_id": 1}, {"$set": {"limit": limit}})
 
 
-def get_pm_settings():
-    result = collection.find_one({"_id": 1})
+async def get_pm_settings():
+    result = await collection.find_one({"_id": 1})
     pmpermit = result["pmpermit"]
     pm_message = result.get("pmpermit_message", PMPERMIT_MESSAGE)
     block_message = result.get("block_message", BLOCKED)
@@ -46,18 +48,18 @@ def get_pm_settings():
     return pmpermit, pm_message, limit, block_message
 
 
-def allow_deny(chat, value):
-    collection.update_one({"_id": chat}, {"$set": {"allow": value}})
+async def allow_deny(chat, value):
+    await collection.update_one({"_id": chat}, {"$set": {"allow": value}})
 
 
-def get_allowed_chat(chat):
-    pm_on, msg, limit, block_msg = get_pm_settings()
+async def get_allowed_chat(chat):
+    pm_on, msg, limit, block_msg = await get_pm_settings()
     if pm_on:
         doc = {"_id": chat, "allow": False}
     else:
         doc = {"_id": chat, "allow": True}
-    r = collection.find_one({"_id": chat})
+    r = await collection.find_one({"_id": chat})
     if not r:
-        collection.insert_one(doc)
+        await collection.insert_one(doc)
     else:
         return r["allow"]

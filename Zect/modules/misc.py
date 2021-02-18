@@ -19,7 +19,7 @@ async def gmute(_, message):
             await message.edit("**Whome should I gmute?**")
             return
     get_user = await app.get_users(user)
-    gmute_user(get_user.id)
+    await gmute_user(get_user.id)
     await message.edit(f"**Gmuted {get_user.first_name}, LOL!**")
 
 
@@ -34,7 +34,7 @@ async def gmute(_, message):
             await message.edit("**Whome should I ungmute?**")
             return
     get_user = await app.get_users(user)
-    ungmute_user(get_user.id)
+    await ungmute_user(get_user.id)
     await message.edit(f"**Unmuted {get_user.first_name}, enjoy!**")
 
 
@@ -43,7 +43,7 @@ async def check_and_del(client, message):
     if not message:
         return
     try:
-        if not message.from_user.id in get_gmuted_users():
+        if not message.from_user.id in (await get_gmuted_users()):
             return
     except AttributeError:
         return
