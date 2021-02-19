@@ -89,11 +89,11 @@ async def kang(client, message):
             pass
         if exist is not False:
             try:
-                await app.ask("Stickers", "/addsticker")
+                await app.ask("Stickers", "/addsticker", timeout=0.2)
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
-            msg = await app.ask("Stickers", packname)
+            msg = await app.ask("Stickers", packname, timeout=0.2)
             limit = "50" if is_anim else "120"
             while limit in msg.text:
                 pack += 1
@@ -105,13 +105,13 @@ async def kang(client, message):
                 await message.edit(
                     "`Switching to Pack " + str(pack) + " due to insufficient space`"
                 )
-                msg = await app.ask("Stickers", packname)
+                msg = await app.ask("Stickers", packname, timeout=0.2)
                 if msg.text == "Invalid pack selected":
-                    await app.ask("Stickers", cmd)
-                    await app.ask("Stickers", packnick)
+                    await app.ask("Stickers", cmd, timeout=0.2)
+                    await app.ask("Stickers", packnick, timeout=0.2)
                     await app.send_document("Stickers", photo)
                     time.sleep(0.2)
-                    await app.ask("Stickers", emoji_)
+                    await app.ask("Stickers", emoji_, timeout=0.2)
                     await app.send_message("Stickers", "/publish")
                     if is_anim:
                         time.sleep(0.2)
@@ -128,33 +128,33 @@ async def kang(client, message):
                     )
                     return
             await app.send_document("Stickers", photo)
-            rsp = await app.listen("Stickers")
+            rsp = await app.listen("Stickers", timeout=0.2)
             if "Sorry, the file type is invalid." in rsp.text:
                 await message.edit(
                     "`Failed to add sticker, use` @Stickers "
                     "`bot to add the sticker manually.`"
                 )
                 return
-            await app.ask("Stickers", emoji_)
+            await app.ask("Stickers", emoji_, timeout=0.2)
             await app.send_message("Stickers", "/done")
         else:
             await message.edit("`Brewing a new Pack...`")
             try:
-                await app.ask("Stickers", cmd)
+                await app.ask("Stickers", cmd, timeout=0.2)
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
-            await app.ask("Stickers", packnick)
+            await app.ask("Stickers", packnick, timeout=0.2)
             await app.send_document("Stickers", photo)
             time.sleep(0.2)
-            rsp = await app.listen("Stickers")
+            rsp = await app.listen("Stickers", timeout=0.2)
             if "Sorry, the file type is invalid." in rsp.text:
                 await message.edit(
                     "`Failed to add sticker, use` @Stickers "
                     "`bot to add the sticker manually.`"
                 )
                 return
-            await app.ask("Stickers", emoji_)
+            await app.ask("Stickers", emoji_, timeout=0.2)
             await app.send_message("Stickers", "/publish")
             if is_anim:
                 time.sleep(0.2)
