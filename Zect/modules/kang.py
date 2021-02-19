@@ -87,14 +87,14 @@ async def kang(client, message):
         if exist is not False:
             try:
                 await app.send_message("Stickers", "/addsticker")
-                await app.listen("Stickers")
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
             await app.send_message("Stickers", packname)
-            msg = await app.listen("Stickers")
+            time.sleep(0.2)
+            msg = await app.get_history("Stickets", limit=1)
             limit = "50" if is_anim else "120"
-            while limit in msg.text:
+            while limit in msg[0].text:
                 pack += 1
                 packname = f"a{user.id}_by_zect_{pack}"
                 packnick = f"{custom_packnick} Vol.{pack}"
@@ -104,16 +104,17 @@ async def kang(client, message):
                 await message.edit(
                     "`Switching to Pack " + str(pack) + " due to insufficient space`"
                 )
-                msg = await app.ask("Stickers", packname)
-                if msg.text == "Invalid pack selected":
+                await app.send_message("Stickers", packname)
+                msg = await app.get_history("Stickets", limit=1)
+                if msg[0].text == "Invalid pack selected":
                     await app.send_message("Stickers", cmd)
-                    await app.listen("Stickers")
+                    time.sleep(0.2)
                     await app.send_message("Stickers", packnick)
-                    await app.listen("Stickers")
+                    time.sleep(0.2)
                     await app.send_document("Stickers", photo)
-                    await app.listen("Stickers")
+                    time.sleep(0.2)
                     await app.send_message("Stickers", emoji_)
-                    await app.listen("Stickers")
+                    time.sleep(0.2)
                     await app.send_message("Stickers", "/publish")
                     if is_anim:
                         time.sleep(0.2)
@@ -130,36 +131,38 @@ async def kang(client, message):
                     )
                     return
             await app.send_document("Stickers", photo)
-            rsp = await app.listen("Stickers")
-            if "Sorry, the file type is invalid." in rsp.text:
+            time.sleep(0.2)
+            rsp = await app.get_history("Stickets", limit=1)
+            if "Sorry, the file type is invalid." in rsp[0].text:
                 await message.edit(
                     "`Failed to add sticker, use` @Stickers "
                     "`bot to add the sticker manually.`"
                 )
                 return
             await app.send_message("Stickers", emoji_)
-            await app.listen("Stickers")
+            time.sleep(0.2)
             await app.send_message("Stickers", "/done")
         else:
             await message.edit("`Brewing a new Pack...`")
             try:
                 await app.send_message("Stickers", cmd)
-                await app.listen("Stickers")
+                time.sleep(0.2)
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
             await app.send_message("Stickers", packnick)
-            await app.listen("Stickers")
+            time.sleep(0.2)
             await app.send_document("Stickers", photo)
-            rsp = await app.listen("Stickers")
-            if "Sorry, the file type is invalid." in rsp.text:
+            time.sleep(0.2)
+            rsp = await app.get_history("Stickets", limit=1)
+            if "Sorry, the file type is invalid." in rsp[0].text:
                 await message.edit(
                     "`Failed to add sticker, use` @Stickers "
                     "`bot to add the sticker manually.`"
                 )
                 return
             await app.send_message("Stickers", emoji_)
-            await app.listen("Stickers")
+            time.sleep(0.2)
             await app.send_message("Stickers", "/publish")
             if is_anim:
                 time.sleep(0.2)
