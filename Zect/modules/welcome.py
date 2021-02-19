@@ -33,9 +33,11 @@ async def welcome(client, message):
         await message.edit("**I'll be polite**")
 
 
-@app.on_message(filters.new_chat_members)
-async def send_welcome(client, message):
+@app.on_message(filters.new_chat_members, group=-2)
+async def new_welcome(client, message):
     media, content, welcome = await Zectdb.get_welcome(message.chat.id)
+    caption = ""
+    men = ""
     if not welcome:
         return
     if media:

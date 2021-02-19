@@ -29,8 +29,6 @@ async def set_welcome(chat, welcome_message, media_id):
 
 async def get_welcome(chat):
     r = await collection.find_one({"_id": chat})
-    if not r:
-        return
     is_media = False
     try:
         if r["media_id"]:
