@@ -91,7 +91,7 @@ async def kang(client, message):
                 await message.edit("first **unblock** @Stickers")
                 return
             await app.send_message("Stickers", packname)
-            time.sleep(1)
+            time.sleep(2)
             msg = await app.get_history("Stickets", limit=1)
             limit = "50" if is_anim else "120"
             while limit in msg[0].text:
@@ -105,7 +105,7 @@ async def kang(client, message):
                     "`Switching to Pack " + str(pack) + " due to insufficient space`"
                 )
                 await app.send_message("Stickers", packname)
-                time.sleep(1)
+                time.sleep(2)
                 msg = await app.get_history("Stickets", limit=1)
                 if msg[0].text == "Invalid pack selected":
                     await app.send_message("Stickers", cmd)
@@ -132,7 +132,7 @@ async def kang(client, message):
                     )
                     return
             await app.send_document("Stickers", photo)
-            time.sleep(1)
+            time.sleep(2)
             rsp = await app.get_history("Stickets", limit=1)
             if "Sorry, the file type is invalid." in rsp[0].text:
                 await message.edit(
@@ -154,7 +154,7 @@ async def kang(client, message):
             await app.send_message("Stickers", packnick)
             time.sleep(0.2)
             await app.send_document("Stickers", photo)
-            time.sleep(1)
+            time.sleep(2)
             rsp = await app.get_history("Stickets", limit=1)
             if "Sorry, the file type is invalid." in rsp[0].text:
                 await message.edit(
