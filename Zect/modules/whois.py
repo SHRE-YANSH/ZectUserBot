@@ -77,7 +77,7 @@ async def whois(client, message):
                 last_name=user.last_name or "",
                 username=user.username or "",
             ),
-            reply_to_message_id=message.reply_to_message.message_id or None,
+            reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
         )
         os.remove(dls)
 
