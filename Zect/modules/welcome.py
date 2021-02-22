@@ -35,11 +35,12 @@ async def welcome(client, message):
 
 @app.on_message(filters.new_chat_members, group=-2)
 async def new_welcome(client, message):
-    media, content, welcome = await Zectdb.get_welcome(message.chat.id)
+    to_welcome = await Zectdb.is_welcome(message.chat.id)
+    if not to_welcome:
+        return
+    media, content = await Zectdb.get_welcome(message.chat.id)
     caption = ""
     men = ""
-    if not welcome:
-        return
     if media:
         msg = await app.get_messages(LOG_CHAT, content)
         if msg.caption:

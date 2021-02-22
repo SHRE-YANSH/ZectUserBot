@@ -13,12 +13,12 @@ async def welcome(chat: int, value: bool):
         await collection.insert_one(doc)
 
 
-async def get_welcome_chat():
-    chats = []
-    results = await collection.find({"welcome": True})
-    for result in results:
-        chats.append(result["_id"])
-    return chats
+async def is_welcome(chat_id):
+    results = await collection.find_one({"_id": chat_id})
+    if not results:
+        return False
+    else:
+        return results["welcome"]
 
 
 async def set_welcome(chat, welcome_message, media_id):
@@ -30,11 +30,8 @@ async def set_welcome(chat, welcome_message, media_id):
 async def get_welcome(chat):
     r = await collection.find_one({"_id": chat})
     is_media = False
-    try:
-        if r["media_id"]:
-            is_media = True
-            return is_media, r["media_id"], True
-        else:
-            return is_media, r["welcome_msg"], True
-    except:
-        return None, None, False
+    if r["media_id"]:
+        is_media = True
+        return is_media, r["media_id"]
+    else:
+        return is_media, r["welcome_msg"]
