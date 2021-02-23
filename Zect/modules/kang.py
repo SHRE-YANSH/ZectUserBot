@@ -138,7 +138,8 @@ async def kang(client, message):
         else:
             await message.edit("`Brewing a new Pack...`")
             try:
-                await app.ask("Stickers", cmd)
+                await app.send_message("Stickers", cmd)
+                time.sleep(0.2)
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
