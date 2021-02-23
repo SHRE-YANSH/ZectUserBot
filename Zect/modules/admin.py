@@ -235,7 +235,7 @@ async def promote(client, message: Message):
         title = get_arg(message)
     else:
         args = get_args(message)
-        if len(args) != 1:
+        if not args:
             await message.edit("**Whome should I promote**")
             return
         user = args[0]
