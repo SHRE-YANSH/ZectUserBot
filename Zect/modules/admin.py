@@ -243,7 +243,7 @@ async def promote(client, message: Message):
             title = " ".join(args[1:])
     try:
         await app.promote_chat_member(message.chat.id, user, can_pin_messages=True)
-        await message.edit(f"**Promoted {reply.from_user["first_name"] if reply else user}**")
+        await message.edit(f"**Promoted**")
     except Exception as e:
         await message.edit(f"{e}")
     if title:
@@ -280,6 +280,6 @@ async def demote(client, message: Message):
             can_pin_messages=False,
             can_post_messages=False,
         )
-        await message.edit(f"**Demoted {reply.from_user["first_name"] if reply else user}**")
+        await message.edit(f"**Demoted**")
     except Exception as e:
         await message.edit(f"{e}")
