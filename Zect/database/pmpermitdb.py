@@ -41,6 +41,8 @@ async def set_limit(limit):
 
 async def get_pm_settings():
     result = await collection.find_one({"_id": 1})
+    if not result:
+        return False
     pmpermit = result["pmpermit"]
     pm_message = result.get("pmpermit_message", PMPERMIT_MESSAGE)
     block_message = result.get("block_message", BLOCKED)

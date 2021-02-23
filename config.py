@@ -1,8 +1,8 @@
 import os
 
-API_HASH = os.getenv("API_HASH")
-API_ID = int(os.getenv("API_ID"))
-MONGO_URI = os.getenv("MONGO_URI")
-SESSION = os.getenv("SESSION")
-PREFIX = os.getenv("PREFIX")
-LOG_CHAT = int(os.getenv("LOG_CHAT"))
+API_HASH = "5ba6ae8034a213046674da853c78da04"
+API_ID = int(1297322)
+MONGO_URI = "mongodb+srv://kkkk:bob123@cluster0.lfwwm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+SESSION = "BQBaSCdVoC3ToV5F1S6A_HEj_BzIEZ4EGpbq2rTQOyR1m8bJW4soBseLnVrCtjNjiGwpGSNY7iYh5IO8xalFheDhVp8duXh0NttfrjR_K5E9lnFGAbBGsmHK_2rlLn97H-psGJfrkwrYjrrorotYx51MzIv3-qgMACrC9yVEDHGgM-cA83LqZ8Mo7G3jpswjmlJuLtchU_peQJDurKwCczxJVeOPpmfddl1GXO12BvdrIiibbQgG0qTfV1OL65hrvaVamMXHMCf570gmsLKZF2KVPBAq0wybMgMDYd8OYjuQqX7C_l1cEJ3FvEkWbC-jaYGwkST94nF11CI8IcUCdCo-OMG8FwA"
+PREFIX = "."
+LOG_CHAT = int(-1001107877043)
