@@ -7,7 +7,7 @@ from pyrogram.errors import UserAdminInvalid
 from pyrogram.methods.chats.get_chat_members import Filters as ChatMemberFilters
 
 from Zect import app, CMD_HELP
-from Zect.helpers.pyrohelper import get_arg
+from Zect.helpers.pyrohelper import get_arg, get_args
 from Zect.helpers.adminhelpers import CheckAdmin
 from config import PREFIX
 
