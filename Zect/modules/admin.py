@@ -7,7 +7,7 @@ from pyrogram.errors import UserAdminInvalid
 from pyrogram.methods.chats.get_chat_members import Filters as ChatMemberFilters
 
 from Zect import app, CMD_HELP
-from Zect.helpers.pyrohelper import get_arg
+from Zect.helpers.pyrohelper import get_arg, get_args
 from Zect.helpers.adminhelpers import CheckAdmin
 from config import PREFIX
 
@@ -221,3 +221,65 @@ async def pin_message(_, message: Message):
     # RIP.
     await asyncio.sleep(3)
     await message.delete()
+    
+    
+@app.on_message(filters.command("promote", PREFIX) & filters.me)
+async def promote(client, message: Message):
+    if await CheckAdmin(message) is False:
+        await message.edit("**I am not admin.**")
+        return
+    title = None
+    reply = message.reply_to_message
+    if reply:
+        user = reply.from_user["id"]
+        title = get_arg(message)
+    else:
+        args = get_args(message)
+        if len(args) != 1 and len(args) != 2:
+            await message.edit("**Whome should I promote**")
+            return
+        user = args[0]
+        if len(args) > 1:
+            title = " ".join(args[1:])
+    try:
+        await app.promote_chat_member(message.chat.id, user, can_pin_messages=True)
+        await message.edit("**Promoted**")
+    except Exception as e:
+        await message.edit(f"{e}")
+    if title:
+        try:
+            await app.set_administrator_title(message.chat.id, user)
+        except:
+            pass
+
+
+@app.on_message(filters.command("demote", PREFIX) & filters.me)
+async def demote(client, message: Message):
+    if await CheckAdmin(message) is False:
+        await message.edit("**I am not admin.**")
+        return
+    reply = message.reply_to_message
+    if reply:
+        user = reply.from_user["id"]
+    else:
+        user = get_arg(message)
+        if not user:
+            await message.edit("**Whome should I demote?**")
+            return
+    try:
+        await app.promote_chat_member(
+            message.chat.id,
+            user,
+            is_anonymous=False,
+            can_change_info=False,
+            can_delete_messages=False,
+            can_edit_messages=False,
+            can_invite_users=False,
+            can_promote_members=False,
+            can_restrict_members=False,
+            can_pin_messages=False,
+            can_post_messages=False,
+        )
+        await message.edit("**Demoted**")
+    except Exception as e:
+        await message.edit(f"{e}")
