@@ -161,7 +161,8 @@ async def kang(client, message):
                 time.sleep(0.2)
                 await app.send_message("Stickers", f"<{packnick}>", parse_mode=None)
             time.sleep(0.2)
-            await app.ask("Stickers", "/skip")
+            await app.send_message("Stickers", "/skip")
+            time.sleep(0.2)
             await app.send_message("Stickers", packname)
         out = f"[kanged](t.me/addstickers/{packname})"
         await message.edit(f"**Sticker** {out}**!**")
