@@ -228,11 +228,11 @@ async def promote(client, message: Message):
     if await CheckAdmin(message) is False:
         await message.edit("**I am not admin.**")
         return
-    title = None
+    title = ""
     reply = message.reply_to_message
     if reply:
         user = reply.from_user["id"]
-        title = get_arg(message)
+        title = str(get_arg(message))
     else:
         args = get_args(message)
         if not args:
