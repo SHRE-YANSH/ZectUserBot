@@ -104,11 +104,14 @@ async def kang(client, message):
                 )
                 msg = await app.ask("Stickers", packname)
                 if msg.text == "Invalid pack selected":
-                    await app.ask("Stickers", cmd)
-                    await app.ask("Stickers", packnick)
+                    await app.send_message("Stickers", cmd)
+                    time.sleep(0.2)
+                    await app.send_message("Stickers", packnick)
+                    time.sleep(0.2)
                     await app.send_document("Stickers", photo)
                     time.sleep(0.2)
-                    await app.ask("Stickers", emoji_)
+                    await app.send_message("Stickers", emoji_)
+                    time.sleep(0.2)
                     await app.send_message("Stickers", "/publish")
                     if is_anim:
                         time.sleep(0.2)
@@ -116,7 +119,7 @@ async def kang(client, message):
                             "Stickers", f"<{packnick}>", parse_mode=None
                         )
                     time.sleep(0.2)
-                    await app.ask("Stickers", "/skip")
+                    await app.send_message("Stickers", "/skip")
                     time.sleep(0.2)
                     await app.send_message("Stickers", packname)
                     out = f"[kanged](t.me/addstickers/{packname})"
@@ -147,13 +150,6 @@ async def kang(client, message):
             time.sleep(0.2)
             await app.send_document("Stickers", photo)
             time.sleep(0.2)
-            rsp = await app.listen("Stickets")
-            if "Sorry, the file type is invalid." in rsp.text:
-                await message.edit(
-                    "`Failed to add sticker, use` @Stickers "
-                    "`bot to add the sticker manually.`"
-                )
-                return
             await app.send_message("Stickers", emoji_)
             time.sleep(0.2)
             await app.send_message("Stickers", "/publish")
