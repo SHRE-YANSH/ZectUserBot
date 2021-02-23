@@ -248,7 +248,7 @@ async def promote(client, message: Message):
         await message.edit(f"{e}")
     if title:
         try:
-            await app.set_administrator_title(message.chat.id, user)
+            await app.set_administrator_title(message.chat.id, user, title)
         except:
             pass
 
