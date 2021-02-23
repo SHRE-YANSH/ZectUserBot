@@ -17,6 +17,8 @@ CMD_HELP.update(
 『 **Admin Tools** 』
   `ban` -> Bans user indefinitely.
   `unban` -> Unbans the user.
+  `promote` [optional title] -> Promotes a user.
+  `demote` _> Demotes a user.
   `mute` -> Mutes user indefinitely.
   `unmute` -> Unmutes the user.
   `kick` -> Kicks the user out of the group.
