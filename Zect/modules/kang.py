@@ -142,7 +142,8 @@ async def kang(client, message):
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
-            await app.ask("Stickers", packnick)
+            await app.send_message("Stickers", packnick)
+            time.sleep(0.2)
             await app.send_document("Stickers", photo)
             time.sleep(0.2)
             rsp = await app.listen("Stickets")
