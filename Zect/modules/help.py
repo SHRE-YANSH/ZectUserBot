@@ -5,7 +5,7 @@ from Zect.helpers.pyrohelper import get_arg
 
 HELP.update(
     {
-        "**Admin Tools**": "__ban, unban, kick, mute, unmute, gmute, ungmute, pin, purge, del__",
+        "**Admin Tools**": "__ban, unban, promote, demote, kick, mute, unmute, gmute, ungmute, pin, purge, del__",
         "**AFK**": "__afk, unafk__",
         "**Alive**": "__alive, ping__",
         "**Developer**": "__eval, term__",

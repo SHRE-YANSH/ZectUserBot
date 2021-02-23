@@ -223,8 +223,8 @@ async def pin_message(_, message: Message):
     # RIP.
     await asyncio.sleep(3)
     await message.delete()
-    
-    
+
+
 @app.on_message(filters.command("promote", PREFIX) & filters.me)
 async def promote(client, message: Message):
     if await CheckAdmin(message) is False:
