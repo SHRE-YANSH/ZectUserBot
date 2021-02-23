@@ -154,7 +154,8 @@ async def kang(client, message):
                     "`bot to add the sticker manually.`"
                 )
                 return
-            await app.ask("Stickers", emoji_)
+            await app.send_message("Stickers", emoji_)
+            time.sleep(0.2)
             await app.send_message("Stickers", "/publish")
             if is_anim:
                 time.sleep(0.2)
