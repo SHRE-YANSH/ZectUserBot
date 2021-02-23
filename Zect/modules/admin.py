@@ -222,7 +222,7 @@ async def pin_message(_, message: Message):
     await asyncio.sleep(3)
     await message.delete()
     
-    @app.on_message(filters.command("promote", PREFIX) & filters.me)
+@app.on_message(filters.command("promote", PREFIX) & filters.me)
 async def promote(client, message: Message):
     if await CheckAdmin(message) is False:
         await message.edit("**I am not admin.**")
