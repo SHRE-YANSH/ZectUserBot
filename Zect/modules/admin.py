@@ -41,7 +41,7 @@ async def ban_hammer(_, message: Message):
         else:
             user = get_arg(message)
             if not user:
-                await message.edit("**Whome should I ban?**")
+                await message.edit("**I can't ban no-one, can I?**")
                 return
         try:
             get_user = await app.get_users(user)
@@ -49,9 +49,11 @@ async def ban_hammer(_, message: Message):
                 chat_id=message.chat.id,
                 user_id=get_user.id,
             )
-            await message.edit(f"{get_user.first_name} has been banned.")
+            await message.edit(f"Banned {get_user.first_name} from the chat.")
         except:
             await message.edit("I can't ban this user.")
+    else:
+        await message.edit("**Am I an admin here?**")
 
 
 @app.on_message(filters.command("unban", PREFIX) & filters.me)
@@ -63,14 +65,16 @@ async def unban(_, message: Message):
         else:
             user = get_arg(message)
             if not user:
-                await message.edit("**Whome should I unban?**")
+                await message.edit("**I need someone to be unbanned here.**")
                 return
         try:
             get_user = await app.get_users(user)
             await app.unban_chat_member(chat_id=message.chat.id, user_id=get_user.id)
-            await message.edit(f"{get_user.first_name} was unbanned.")
+            await message.edit(f"Unbanned {get_user.first_name} from the chat.")
         except:
             await message.edit("I can't unban this user.")
+    else:
+        await message.edit("**Am I an admin here?**")
 
 
 # Mute Permissions
@@ -110,6 +114,8 @@ async def mute_hammer(_, message: Message):
             await message.edit(f"{get_user.first_name} has been muted.")
         except:
             await message.edit("I can't mute this user.")
+    else:
+        await message.edit("**Am I an admin here?**")
 
 
 # Unmute permissions
@@ -149,6 +155,8 @@ async def unmute(_, message: Message):
             await message.edit(f"{get_user.first_name} was unmuted.")
         except:
             await message.edit("I can't unmute this user.")
+    else:
+        await message.edit("**Am I an admin here?**")
 
 
 @app.on_message(filters.command("kick", PREFIX) & filters.me)
@@ -168,9 +176,11 @@ async def kick_user(_, message: Message):
                 chat_id=message.chat.id,
                 user_id=get_user.id,
             )
-            await message.edit(f"{get_user.first_name} was kicked.")
+            await message.edit(f"Kicked {get_user.first_name} from the chat.")
         except:
             await message.edit("I can't kick this user.")
+    else:
+        await message.edit("**Am I an admin here?**")
 
 
 @app.on_message(filters.command("pin", PREFIX) & filters.me)
@@ -228,7 +238,7 @@ async def pin_message(_, message: Message):
 @app.on_message(filters.command("promote", PREFIX) & filters.me)
 async def promote(client, message: Message):
     if await CheckAdmin(message) is False:
-        await message.edit("**I am not admin.**")
+        await message.edit("**Am I an admin here?.**")
         return
     title = ""
     reply = message.reply_to_message
@@ -238,14 +248,17 @@ async def promote(client, message: Message):
     else:
         args = get_args(message)
         if not args:
-            await message.edit("**Whome should I promote**")
+            await message.edit("**I can't promote no-one, can I?**")
             return
         user = args[0]
         if len(args) > 1:
             title = " ".join(args[1:])
+    get_user = await app.get_users(user)
     try:
         await app.promote_chat_member(message.chat.id, user, can_pin_messages=True)
-        await message.edit(f"**Promoted**")
+        await message.edit(
+            f"**{get_user.first_name} is now powered with admin rights!**"
+        )
     except Exception as e:
         await message.edit(f"{e}")
     if title:
@@ -266,8 +279,9 @@ async def demote(client, message: Message):
     else:
         user = get_arg(message)
         if not user:
-            await message.edit("**Whome should I demote?**")
+            await message.edit("**I can't demote no-one, can I?**")
             return
+    get_user = await app.get_users(user)
     try:
         await app.promote_chat_member(
             message.chat.id,
@@ -282,6 +296,8 @@ async def demote(client, message: Message):
             can_pin_messages=False,
             can_post_messages=False,
         )
-        await message.edit(f"**Demoted**")
+        await message.edit(
+            f"{get_user.first_name} is now stripped off of their admin rights!"
+        )
     except Exception as e:
         await message.edit(f"{e}")

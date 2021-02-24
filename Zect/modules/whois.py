@@ -26,7 +26,8 @@ infotext = (
     " > UserID: `{user_id}`\n"
     " > First Name: `{first_name}`\n"
     " > Last Name: `{last_name}`\n"
-    " > Username: `{username}`\n"
+    " > Username: @{username}\n"
+    " > Common Chats: `{common_chats}`\n"
 )
 
 
@@ -52,6 +53,7 @@ async def whois(client, message):
     except PeerIdInvalid:
         await message.reply("I don't know that User.")
         return
+    common_chat = len(await app.get_common_chats(user))
     pfp = await app.get_profile_photos(user.id)
     if not pfp:
         await message.edit_text(
@@ -61,6 +63,7 @@ async def whois(client, message):
                 first_name=user.first_name,
                 last_name=user.last_name or "",
                 username=user.username or "",
+                common_chats=common_chat,
             ),
             disable_web_page_preview=True,
         )
@@ -76,8 +79,11 @@ async def whois(client, message):
                 first_name=user.first_name,
                 last_name=user.last_name or "",
                 username=user.username or "",
+                common_chats=common_chat,
             ),
-            reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+            reply_to_message_id=message.reply_to_message.message_id
+            if message.reply_to_message
+            else None,
         )
         os.remove(dls)
 
