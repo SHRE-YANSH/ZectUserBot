@@ -297,7 +297,7 @@ async def demote(client, message: Message):
             can_post_messages=False,
         )
         await message.edit(
-            f"{get_user.first_name} is now stripped off of their admin rights!"
+            f"**{get_user.first_name} is now stripped off of their admin rights!**"
         )
     except Exception as e:
         await message.edit(f"{e}")
