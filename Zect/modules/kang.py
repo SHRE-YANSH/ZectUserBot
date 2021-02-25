@@ -13,6 +13,9 @@ from Zect import app
 from config import PREFIX
 
 
+convo = ""
+
+
 @app.on_message(filters.command("kang", PREFIX) & filters.me)
 async def kang(client, message):
     user = await app.get_me()
@@ -86,13 +89,13 @@ async def kang(client, message):
             pass
         if exist is not False:
             try:
-                await app.ask("Stickers", "/addsticker")
+                await app.send_message("Stickers", "/addsticker")
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
-            msg = await app.ask("Stickers", packname)
+            await app.send_message("Stickers", packname)
             limit = "50" if is_anim else "120"
-            while limit in msg.text:
+            while limit in await get_response(message):
                 pack += 1
                 packname = f"a{user.id}_by_zect_{pack}"
                 packnick = f"{custom_packnick} Vol.{pack}"
@@ -102,16 +105,16 @@ async def kang(client, message):
                 await message.edit(
                     "`Switching to Pack " + str(pack) + " due to insufficient space`"
                 )
-                msg = await app.ask("Stickers", packname)
-                if msg.text == "Invalid pack selected":
+                await app.send_message("Stickers", packname)
+                if await get_response(message) == "Invalid pack selected":
                     await app.send_message("Stickers", cmd)
-                    time.sleep(0.2)
+                    await get_response(message)
                     await app.send_message("Stickers", packnick)
-                    time.sleep(0.2)
+                    await get_response(message)
                     await app.send_document("Stickers", photo)
-                    time.sleep(0.2)
+                    await get_response(message)
                     await app.send_message("Stickers", emoji_)
-                    time.sleep(0.2)
+                    await get_response(message)
                     await app.send_message("Stickers", "/publish")
                     if is_anim:
                         time.sleep(0.2)
@@ -129,36 +132,43 @@ async def kang(client, message):
                     return
             await app.send_document("Stickers", photo)
             time.sleep(0.2)
-            rsp = await app.listen("Stickets")
-            if "Sorry, the file type is invalid." in rsp.text:
+            rsp = await get_response(message)
+            if "Sorry, the file type is invalid." in rsp:
                 await message.edit(
                     "`Failed to add sticker, use` @Stickers "
                     "`bot to add the sticker manually.`"
                 )
                 return
-            await app.ask("Stickers", emoji_)
+            await app.send_message("Stickers", emoji_)
+            await get_response(message)
             await app.send_message("Stickers", "/done")
         else:
             await message.edit("`Brewing a new Pack...`")
             try:
                 await app.send_message("Stickers", cmd)
-                time.sleep(0.2)
             except YouBlockedUser:
                 await message.edit("first **unblock** @Stickers")
                 return
             await app.send_message("Stickers", packnick)
-            time.sleep(0.2)
+            await get_response(message)
             await app.send_document("Stickers", photo)
             time.sleep(0.2)
+            rsp = await get_response(message)
+            if "Sorry, the file type is invalid." in rsp:
+                await message.edit(
+                    "`Failed to add sticker, use` @Stickers "
+                    "`bot to add the sticker manually.`"
+                )
+                return
             await app.send_message("Stickers", emoji_)
-            time.sleep(0.2)
+            await get_response(message)
             await app.send_message("Stickers", "/publish")
             if is_anim:
                 time.sleep(0.2)
                 await app.send_message("Stickers", f"<{packnick}>", parse_mode=None)
             time.sleep(0.2)
             await app.send_message("Stickers", "/skip")
-            time.sleep(0.2)
+            await get_response(message)
             await app.send_message("Stickers", packname)
         out = f"[kanged](t.me/addstickers/{packname})"
         await message.edit(f"**Sticker** {out}**!**")
@@ -211,6 +221,10 @@ def resize_photo(photo: str) -> io.BytesIO:
     image.save(resized_photo, "PNG")
     os.remove(photo)
     return resized_photo
+
+
+async def get_response(message):
+    return [x async for x in app.iter_history("Stickers", limit=1)][0].text
 
 
 KANGING_STR = (
