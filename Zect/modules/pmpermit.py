@@ -83,6 +83,7 @@ async def allow(client, message):
     chat_id = message.chat.id
     await Zectdb.allow_deny(chat_id, True)
     await message.edit(f"**I have allowed [you](tg://user?id={chat_id}) to PM me.**")
+    USERS_AND_WARNS.update({chat_id: 0})
 
 
 @app.on_message(filters.command("deny", PREFIX) & filters.me & filters.private)
