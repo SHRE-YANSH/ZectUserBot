@@ -25,11 +25,11 @@ else:
 
 async def set_pm(value: bool):
     doc = {"_id": 1, "pmpermit": False}
-    r = collection.find_one({"_id": 1})
+    r = await collection.find_one({"_id": 1})
     if r:
-        await collection.update_one({"_id": 1}, {"$set": {"pmpermit": True}})
+        await collection.update_one({"_id": 1}, {"$set": {"pmpermit": value}})
     else:
-        collection.insert_one(doc)
+        await collection.insert_one(doc)
 
 
 async def set_permit_message(text):
