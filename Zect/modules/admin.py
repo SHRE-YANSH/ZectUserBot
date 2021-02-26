@@ -49,7 +49,7 @@ async def ban_hammer(_, message: Message):
             )
             await message.edit(f"{get_user.first_name} has been banned.")
         except:
-            await message.edit("I can't ban this user.")
+            await message.edit("**I can't ban this user.**")
 
 
 @app.on_message(filters.command("unban", PREFIX) & filters.me)
