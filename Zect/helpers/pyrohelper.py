@@ -43,7 +43,7 @@ async def user_afk(filter, client: Client, message: Message):
 async def denied_users(filter, client: Client, message: Message):
     if not await pm_guard():
         return False
-    if message.chat.id in (await get_approved_users):
+    if message.chat.id in (await get_approved_users()):
         return False
     else:
         return True
