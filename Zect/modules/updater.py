@@ -15,6 +15,7 @@ CMD_HELP.update(
         "Updater": """
 『 **Updater** 
   `update`-> updates the userbot to latest build. """}
+)
 
 UPSTREAM_REPO_URL = "https://github.com/okay-retard/ZectUserBot"
 requirements_path = path.join(
