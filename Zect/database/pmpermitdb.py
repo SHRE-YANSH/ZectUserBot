@@ -69,7 +69,7 @@ async def get_approved_users():
 
 
 async def deny_user(chat):
-    await collection.update_one({"_id": "Approveds"}, {"$pull": {"users": chat}})
+    await collection.update_one({"_id": "Approved"}, {"$pull": {"users": chat}})
 
 
 async def pm_guard():
