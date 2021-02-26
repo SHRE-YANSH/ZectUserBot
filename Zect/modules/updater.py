@@ -59,7 +59,7 @@ async def upstream(client, message):
         repo.__del__()
         return
     except GitCommandError as error:
-        await status.edit(f"{txt}\n`Early failure! {error}`", time=10)
+        await status.edit(f"{txt}\n`Early failure! {error}`")
         repo.__del__()
         return
     except InvalidGitRepositoryError as error:
@@ -151,9 +151,7 @@ async def upstream(client, message):
         try:
             remote.push(refspec=f"HEAD:refs/heads/{ac_br}", force=True)
         except GitCommandError as error:
-            await status.edit(f"{txt}\n`Here is the error log:\n{error}`")
-            repo.__del__()
-            return
+            pass
         await status.edit("`Successfully Updated!\nRestarting, please wait...`")
     else:
         # Classic Updater, pretty straightforward.
