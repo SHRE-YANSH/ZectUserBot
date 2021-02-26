@@ -15,16 +15,8 @@ BLOCKED = "`Guess You're A Spammer, Blocked Successfully `"
 LIMIT = 5
 
 
-doc = {"_id": 1, "pmpermit": False}
-r = collection.find_one({"_id": 1})
-if r:
-    pass
-else:
-    collection.insert_one(doc)
-
-
 async def set_pm(value: bool):
-    doc = {"_id": 1, "pmpermit": False}
+    doc = {"_id": 1, "pmpermit": value}
     r = await collection.find_one({"_id": 1})
     if r:
         await collection.update_one({"_id": 1}, {"$set": {"pmpermit": value}})
