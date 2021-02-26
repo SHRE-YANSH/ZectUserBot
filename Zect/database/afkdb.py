@@ -4,24 +4,17 @@ import asyncio
 collection = cli["Zect"]["afk"]
 
 
-doc = {"_id": 1, "afk_status": False}
-r = collection.find_one({"_id": 1})
-if r:
-    pass
-else:
-    collection.insert_one(doc)
-
 
 async def set_afk(afk_status, afk_since, reason):
     doc = {"_id": 1, "afk_status": False}
-    r = collection.find_one({"_id": 1})
+    r = await collection.find_one({"_id": 1})
     if r:
         await collection.update_one(
         {"_id": 1},
         {"$set": {"afk_status": afk_status, "afk_since": afk_since, "reason": reason}},
     )
     else:
-        collection.insert_one(doc)
+        await collection.insert_one(doc)
 
 
 async def set_unafk():
