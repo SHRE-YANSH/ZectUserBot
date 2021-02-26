@@ -17,11 +17,15 @@ LIMIT = 5
 
 async def set_pm(value: bool):
     doc = {"_id": 1, "pmpermit": value}
+    doc2 = {"_id": "Approved", "users": []}
     r = await collection.find_one({"_id": 1})
+    r2 = await collection.find_one({"_id": "Approved"})
     if r:
         await collection.update_one({"_id": 1}, {"$set": {"pmpermit": value}})
     else:
         await collection.insert_one(doc)
+    if not r2:
+        await collection.insert_one(doc2)
 
 
 async def set_permit_message(text):
