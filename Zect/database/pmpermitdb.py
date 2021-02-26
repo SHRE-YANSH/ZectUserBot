@@ -62,3 +62,13 @@ async def get_allowed_chat(chat):
         await collection.insert_one(doc)
     else:
         return r["allow"]
+
+
+async def pm_guard():
+    result = await collection.find_one({"_id": 1})
+    if not result:
+        return False
+    if not result["pmpermit"]:
+        return False
+    else:
+        return True

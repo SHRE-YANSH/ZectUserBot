@@ -97,7 +97,6 @@ async def deny(client, message):
     filters.private
     & filters.create(denied_users)
     & filters.incoming
-    & filters.text
     & ~filters.me
     & ~filters.bot
 )

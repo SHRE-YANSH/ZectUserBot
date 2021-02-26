@@ -1,7 +1,7 @@
 from pyrogram.types import Message, User
 from pyrogram import Client
 from Zect.database.afkdb import get_afk_status
-from Zect.database.pmpermitdb import get_allowed_chat, get_pm_settings, collection
+from Zect.database.pmpermitdb import get_allowed_chat, pm_guard
 import shlex
 
 
@@ -41,10 +41,7 @@ async def user_afk(filter, client: Client, message: Message):
 
 
 async def denied_users(filter, client: Client, message: Message):
-    result = await collection.find_one({"_id": 1})
-    if not result:
-        return False
-    if not result["pmpermit"]:
+    if not await pm_guard():
         return False
     if await get_allowed_chat(message.chat.id):
         return False
