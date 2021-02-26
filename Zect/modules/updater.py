@@ -63,8 +63,8 @@ async def upstream(client, message):
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
         repo.create_head("master", origin.refs.master)
-        repo.heads.main.set_tracking_branch(origin.refs.main)
-        repo.heads.main.checkout(True)
+        repo.heads.master.set_tracking_branch(origin.refs.master)
+        repo.heads.master.checkout(True)
     ac_br = repo.active_branch.name
     if ac_br != "master":
         await status.edit(f"**[UPDATER]:**` You are on ({ac_br})\n Please change to master branch.`")
