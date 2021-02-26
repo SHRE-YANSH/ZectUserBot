@@ -81,7 +81,7 @@ async def setpmmsg(client, message):
 @app.on_message(filters.command("allow", PREFIX) & filters.me & filters.private)
 async def allow(client, message):
     chat_id = message.chat.id
-    await Zectdb.allow_deny(chat_id, True)
+    await Zectdb.allow_user(chat_id)
     await message.edit(f"**I have allowed [you](tg://user?id={chat_id}) to PM me.**")
     USERS_AND_WARNS.update({chat_id: 0})
 
@@ -89,7 +89,7 @@ async def allow(client, message):
 @app.on_message(filters.command("deny", PREFIX) & filters.me & filters.private)
 async def deny(client, message):
     chat_id = message.chat.id
-    await Zectdb.allow_deny(chat_id, False)
+    await Zectdb.deny_user(chat_id)
     await message.edit(f"**I have denied [you](tg://user?id={chat_id}) to PM me.**")
 
 

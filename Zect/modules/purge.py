@@ -21,7 +21,6 @@ async def admin_check(message: Message) -> bool:
 
     check_status = await client.get_chat_member(chat_id=chat_id, user_id=user_id)
     admin_strings = ["creator", "administrator"]
-    # https://git.colinshark.de/PyroZect/PyroZect/src/branch/master/pyrobot/modules/admin.py#L69
     return check_status.status in admin_strings
 
 
@@ -40,7 +39,7 @@ async def purge_message(client, message):
     count_del_etion_s = 0
     if message.reply_to_message:
         for a_s_message_id in range(
-                message.reply_to_message.message_id, message.message_id
+            message.reply_to_message.message_id, message.message_id
         ):
             message_ids.append(a_s_message_id)
             if len(message_ids) == 100:

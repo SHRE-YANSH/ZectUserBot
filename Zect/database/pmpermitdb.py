@@ -47,21 +47,25 @@ async def get_pm_settings():
     return pmpermit, pm_message, limit, block_message
 
 
-async def allow_deny(chat, value):
-    await collection.update_one({"_id": chat}, {"$set": {"allow": value}})
-
-
-async def get_allowed_chat(chat):
-    pm_on, msg, limit, block_msg = await get_pm_settings()
-    if pm_on:
-        doc = {"_id": chat, "allow": False}
+async def allow_user(chat):
+    doc = {"_id": "Approved", "users": [chat]}
+    r = await collection.find_one({"_id": "Approved"})
+    if r:
+        await collection.update_one({"_id": "Approved"}, {"$push": {"users": chat}})
     else:
-        doc = {"_id": chat, "allow": True}
-    r = await collection.find_one({"_id": chat})
-    if not r:
         await collection.insert_one(doc)
+
+
+async def get_approved_users():
+    results = await collection.find_one({"_id": "Approved"})
+    if results:
+        return results["users"]
     else:
-        return r["allow"]
+        return []
+
+
+async def deny_user(chat):
+    await collection.update_one({"_id": "Approveds"}, {"$pull": {"users": chat}})
 
 
 async def pm_guard():
