@@ -9,3 +9,5 @@ dnspython
 requests
 asyncio
 pillow
+GitPython
+heroku3

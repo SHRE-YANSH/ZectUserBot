@@ -51,7 +51,7 @@ async def ban_hammer(_, message: Message):
             )
             await message.edit(f"Banned {get_user.first_name} from the chat.")
         except:
-            await message.edit("I can't ban this user.")
+            await message.edit("**I can't ban this user.**")
     else:
         await message.edit("**Am I an admin here?**")
 
@@ -72,7 +72,7 @@ async def unban(_, message: Message):
             await app.unban_chat_member(chat_id=message.chat.id, user_id=get_user.id)
             await message.edit(f"Unbanned {get_user.first_name} from the chat.")
         except:
-            await message.edit("I can't unban this user.")
+            await message.edit("**I can't unban this user.**")
     else:
         await message.edit("**Am I an admin here?**")
 
@@ -113,7 +113,7 @@ async def mute_hammer(_, message: Message):
             )
             await message.edit(f"{get_user.first_name} has been muted.")
         except:
-            await message.edit("I can't mute this user.")
+            await message.edit("**I can't mute this user.**")
     else:
         await message.edit("**Am I an admin here?**")
 
@@ -178,7 +178,7 @@ async def kick_user(_, message: Message):
             )
             await message.edit(f"Kicked {get_user.first_name} from the chat.")
         except:
-            await message.edit("I can't kick this user.")
+            await message.edit("**I can't kick this user.**")
     else:
         await message.edit("**Am I an admin here?**")
 

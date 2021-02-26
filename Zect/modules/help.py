@@ -13,6 +13,7 @@ HELP.update(
         "**Notes**": "__save, get, clear, clearall, notes__",
         "**Anti-PM**": "__pmguard, setpmmsg, setlimit, setblockmsg, allow, deny__",
         "**Greetings**": "__welcome, setwelcome__",
+        "**Updater**": "__update__",
     }
 )
 
