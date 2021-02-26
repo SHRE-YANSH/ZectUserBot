@@ -8,7 +8,7 @@ from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from pyrogram import filters
 from Zect import app
-from Zect.helpers.pyrohelpers import get_arg
+from Zect.helpers.pyrohelper import get_arg
 
 UPSTREAM_REPO_URL = "https://github.com/okay-retard/ZectUserBot"
 requirements_path = path.join(
