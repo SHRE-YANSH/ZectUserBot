@@ -1,7 +1,7 @@
 import asyncio
 import sys
 from os import environ, execle, path, remove
-from config import HEROKU_API, HEROKU_APP_NAME
+from config import HEROKU_API, HEROKU_APP_NAME, PREFIX
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
