@@ -81,8 +81,13 @@ async def setpmmsg(client, message):
 @app.on_message(filters.command("allow", PREFIX) & filters.me & filters.private)
 async def allow(client, message):
     chat_id = message.chat.id
+    pmpermit, pm_message, limit, block_message = await Zectdb.get_pm_settings()
     await Zectdb.allow_user(chat_id)
     await message.edit(f"**I have allowed [you](tg://user?id={chat_id}) to PM me.**")
+    async for message in app.search_messages(
+        chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
+    ):
+        await message.delete()
     USERS_AND_WARNS.update({chat_id: 0})
 
 
