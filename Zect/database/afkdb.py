@@ -6,7 +6,7 @@ collection = cli["Zect"]["afk"]
 
 
 async def set_afk(afk_status, afk_since, reason):
-    doc = {"_id": 1, "afk_status": False}
+    doc = {"_id": 1, "afk_status": afk_status}
     r = await collection.find_one({"_id": 1})
     if r:
         await collection.update_one(
