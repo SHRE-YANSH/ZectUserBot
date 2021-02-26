@@ -154,7 +154,7 @@ async def unmute(_, message: Message):
             )
             await message.edit(f"{get_user.first_name} was unmuted.")
         except:
-            await message.edit(**"I can't unmute this user.**")
+            await message.edit("**I can't unmute this user.**")
     else:
         await message.edit("**Am I an admin here?**")
 
