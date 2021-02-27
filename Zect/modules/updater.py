@@ -14,7 +14,8 @@ CMD_HELP.update(
     {
         "Updater": """
 『 **Updater** 
-  `update`-> updates the userbot to latest build. """}
+  `update`-> updates the userbot to latest build. """
+    }
 )
 
 UPSTREAM_REPO_URL = "https://github.com/okay-retard/ZectUserBot"
@@ -64,10 +65,7 @@ async def upstream(client, message):
         return
     except InvalidGitRepositoryError as error:
         if conf != "now":
-            await status.edit(
-                f"**Unfortunately, the directory {error} does not seem to be a git repository.Or Maybe it just needs a sync verification. But we can fix that by force updating the userbot using** `.update now.`"
-            )
-            return
+            pass
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
