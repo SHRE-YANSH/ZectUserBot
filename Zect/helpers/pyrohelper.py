@@ -2,6 +2,7 @@ from pyrogram.types import Message, User
 from pyrogram import Client
 from Zect.database.afkdb import get_afk_status
 from Zect.database.pmpermitdb import get_approved_users, pm_guard
+import Zect.database.welcomedb as Zectdb
 import shlex
 
 
@@ -44,6 +45,14 @@ async def denied_users(filter, client: Client, message: Message):
     if not await pm_guard():
         return False
     if message.chat.id in (await get_approved_users()):
+        return False
+    else:
+        return True
+
+
+async def welcome_chat(filter, client: Client, message: Message):
+    to_welcome = await Zectdb.is_welcome(message.chat.id)
+    if not to_welcome:
         return False
     else:
         return True

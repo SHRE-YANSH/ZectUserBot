@@ -2,9 +2,10 @@ import re
 from pyrogram import filters
 
 from Zect import app, CMD_HELP
-from Zect.helpers.pyrohelper import get_arg
+from Zect.helpers.pyrohelper import get_arg, welcome_chat
 import Zect.database.welcomedb as Zectdb
 from config import PREFIX, LOG_CHAT
+
 
 CMD_HELP.update(
     {
@@ -33,11 +34,8 @@ async def welcome(client, message):
         await message.edit("**I'll be polite**")
 
 
-@app.on_message(filters.new_chat_members, group=-2)
+@app.on_message(filters.create(welcome_chat) & filters.new_chat_members, group=-2)
 async def new_welcome(client, message):
-    to_welcome = await Zectdb.is_welcome(message.chat.id)
-    if not to_welcome:
-        return
     media, content = await Zectdb.get_welcome(message.chat.id)
     caption = ""
     men = ""
