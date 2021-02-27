@@ -103,7 +103,8 @@ async def upstream(client, message):
                 remove("output.txt")
             else:
                 return await status.edit(
-                    "{changelog_str}\n\nDo `.update now` to update."
+                    f"{changelog_str}\n\nDo `.update now` to update.",
+                    disable_web_page_preview=True,
                 )
         else:
             await status.edit(
