@@ -102,7 +102,7 @@ async def mute_hammer(_, message: Message):
         else:
             user = get_arg(message)
             if not user:
-                await message.edit("**Whome should I mute?**")
+                await message.edit("****I can't mute no-one, can I?**")
                 return
         try:
             get_user = await app.get_users(user)
