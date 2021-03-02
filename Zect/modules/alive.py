@@ -62,7 +62,7 @@ async def alive(_, m):
     reply_msg += f"__Zect uptime__: {uptime}"
     photo = "https://telegra.ph//file/dcd069c3eb26c9fa3011d.jpg"
     await m.delete()
-    await app.send_photo(m.chat.id, photo, caption=reply_msg)
+    await app.send_photo(m.chat.id, photo, caption=reply_msg, reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None)
 
 
 @app.on_message(filters.command("ping", PREFIX) & filters.me)
