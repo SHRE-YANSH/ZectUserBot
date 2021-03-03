@@ -32,7 +32,7 @@ async def purge_message(client, message):
             await message.delete()
             return
     else:
-        return
+        pass
     start_t = datetime.now()
     await message.delete()
     message_ids = []
