@@ -9,8 +9,18 @@ from pyrogram.raw.functions.messages import GetStickerSet
 from pyrogram.raw.types import InputStickerSetShortName
 from pyrogram.errors import YouBlockedUser, StickersetInvalid
 from Zect.helpers.pyrohelper import get_args
-from Zect import app
+from Zect import app, CMD_HELP
 from config import PREFIX
+
+CMD_HELP.update(
+    {
+        "Sticker": """
+『 **Sticker** 』
+  `kang` -> kangs stickers or creates new ones".
+  `stkrinfo` -> Get sticker pack info.
+"""
+    }
+)
 
 
 @app.on_message(filters.command("kang", PREFIX) & filters.me)

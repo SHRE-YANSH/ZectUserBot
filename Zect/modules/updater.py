@@ -13,7 +13,7 @@ from Zect.helpers.pyrohelper import get_arg
 CMD_HELP.update(
     {
         "Updater": """
-『 **Updater** 
+『 **Updater**』
   `update`-> updates the userbot to latest build. """
     }
 )
