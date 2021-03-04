@@ -9,7 +9,7 @@ HELP.update(
         "**AFK**": "__afk, unafk__",
         "**Alive**": "__alive, ping__",
         "**Developer**": "__eval, term__",
-        "**Misc**": "__paste, tr, whois, id__, purge, del",
+        "**Misc**": "__paste, tr, whois, id__",
         "**Notes**": "__save, get, clear, clearall, notes__",
         "**Anti-PM**": "__pmguard, setpmmsg, setlimit, setblockmsg, allow, deny__",
         "**Sticker**": "__kang, stkrinfo__",
