@@ -17,7 +17,7 @@ async def edrep(msg: Message, **kwargs):
 @app.on_message(filters.command("tr", PREFIX) & filters.me)
 async def translate(_client, message):
     if message.reply_to_message and (
-            message.reply_to_message.text or message.reply_to_message.caption
+        message.reply_to_message.text or message.reply_to_message.caption
     ):
         if len(message.text.split()) == 1:
             await edrep(message, text="Usage: Reply to a message, then `tr <lang>`")

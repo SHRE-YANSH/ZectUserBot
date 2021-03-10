@@ -11,8 +11,8 @@ CMD_HELP.update(
     {
         "Greetings": """
 『 **Greetings** 』
-  `welcome` [on or off] -> Activates or deactivates welcome.
   `setwelcome` -> Sets a custom welcome message.
+  `clearwelcome` -> Disables welcome message in the chat.
   """
     }
 )
