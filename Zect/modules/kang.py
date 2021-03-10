@@ -124,13 +124,13 @@ async def kang(client, message):
                     await get_response(message)
                     await app.send_message("Stickers", "/publish")
                     if is_anim:
-                        time.sleep(0.2)
+                        await get_response(message)
                         await app.send_message(
                             "Stickers", f"<{packnick}>", parse_mode=None
                         )
-                    time.sleep(0.2)
+                    await get_response(message)
                     await app.send_message("Stickers", "/skip")
-                    time.sleep(0.2)
+                    await get_response(message)
                     await app.send_message("Stickers", packname)
                     out = f"[kanged](t.me/addstickers/{packname})"
                     await message.edit(
@@ -159,7 +159,7 @@ async def kang(client, message):
             await app.send_message("Stickers", packnick)
             await get_response(message)
             await app.send_document("Stickers", photo)
-            time.sleep(0.2)
+            await get_response(message)
             rsp = await get_response(message)
             if "Sorry, the file type is invalid." in rsp:
                 await message.edit(
@@ -171,9 +171,9 @@ async def kang(client, message):
             await get_response(message)
             await app.send_message("Stickers", "/publish")
             if is_anim:
-                time.sleep(0.2)
+                await get_response(message)
                 await app.send_message("Stickers", f"<{packnick}>", parse_mode=None)
-            time.sleep(0.2)
+            await get_response(message)
             await app.send_message("Stickers", "/skip")
             await get_response(message)
             await app.send_message("Stickers", packname)
