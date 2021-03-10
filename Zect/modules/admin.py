@@ -27,6 +27,7 @@ CMD_HELP.update(
   `pin` -> pins a message.
   `del` -> delete a message.
   `purge` -> purge message(s)
+  `invite` -> add user to chat.
 """
     }
 )
@@ -302,6 +303,7 @@ async def demote(client, message: Message):
     except Exception as e:
         await message.edit(f"{e}")
 
+
 @app.on_message(filters.command("invite", PREFIX) & filters.me & ~filters.private)
 async def invite(client, message):
     reply = message.reply_to_message
@@ -315,8 +317,6 @@ async def invite(client, message):
     get_user = await app.get_users(user)
     try:
         await app.add_chat_members(message.chat.id, get_user.id)
-        await message.edit(
-            f"**Added {get_user.first_name} to the chat!**"
-        )
+        await message.edit(f"**Added {get_user.first_name} to the chat!**")
     except Exception as e:
         await message.edit(f"{e}")

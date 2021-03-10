@@ -4,34 +4,28 @@ from . import cli
 collection = cli["Zect"]["welcome"]
 
 
-async def welcome(chat: int, value: bool):
-    doc = {"_id": chat, "welcome": value}
-    r = await collection.find_one({"_id": chat})
-    if r:
-        await collection.update_one({"_id": chat}, {"$set": {"welcome": value}})
+async def save_welcome(chat_id, msg_id):
+    doc = {"_id": 1, "welcomes": {chat_id: msg_id}}
+    result = await collection.find_one({"_id": 1})
+    if result:
+        await collection.update_one(
+            {"_id": 1}, {"$set": {f"welcomes.{chat_id}": msg_id}}
+        )
     else:
         await collection.insert_one(doc)
 
 
-async def is_welcome(chat_id):
-    results = await collection.find_one({"_id": chat_id})
-    if not results:
-        return False
+async def get_welcome(chat_id):
+    result = await collection.find_one({"_id": 1})
+    if result is not None:
+        try:
+            msg_id = result["welcomes"][chat_id]
+            return msg_id
+        except KeyError:
+            return None
     else:
-        return results["welcome"]
+        return None
 
 
-async def set_welcome(chat, welcome_message, media_id):
-    await collection.update_one(
-        {"_id": chat}, {"$set": {"welcome_msg": welcome_message, "media_id": media_id}}
-    )
-
-
-async def get_welcome(chat):
-    r = await collection.find_one({"_id": chat})
-    is_media = False
-    if r["media_id"]:
-        is_media = True
-        return is_media, r["media_id"]
-    else:
-        return is_media, r["welcome_msg"]
+async def clear_welcome(chat_id):
+    await collection.update_one({"_id": 1}, {"$unset": {f"welcomes.{chat_id}": ""}})

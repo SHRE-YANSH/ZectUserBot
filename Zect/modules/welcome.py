@@ -20,27 +20,19 @@ CMD_HELP.update(
 LOG_CHAT = LOG_CHAT
 
 
-@app.on_message(filters.command("welcome", PREFIX) & filters.me)
+@app.on_message(filters.command("clearwelcome", PREFIX) & filters.me)
 async def welcome(client, message):
-    arg = get_arg(message)
-    if not arg:
-        await message.edit("**I only understand on or off**")
-        return
-    if arg == "off":
-        await Zectdb.welcome(message.chat.id, False)
-        await message.edit("**I am sulking not to say hello anymore :(**")
-    if arg == "on":
-        Zectdb.welcome(message.chat.id, True)
-        await message.edit("**I'll be polite**")
+    await Zectdb.clear_welcome(str(message.chat.id))
+    await message.edit("**I am sulking not to say hello anymore :(**")
 
 
 @app.on_message(filters.create(welcome_chat) & filters.new_chat_members, group=-2)
 async def new_welcome(client, message):
-    media, content = await Zectdb.get_welcome(message.chat.id)
+    msg_id = await Zectdb.get_welcome(str(message.chat.id))
     caption = ""
     men = ""
-    if media:
-        msg = await app.get_messages(LOG_CHAT, content)
+    msg = await app.get_messages(LOG_CHAT, msg_id)
+    if msg.media:
         if msg.caption:
             caption = msg.caption
             if "{mention}" in caption:
@@ -73,8 +65,9 @@ async def new_welcome(client, message):
             )
 
     else:
-        if "{mention}" in content:
-            men = content.replace("{mention}", "[{}](tg://user?id={})")
+        text = msg.text
+        if "{mention}" in text:
+            men = text.replace("{mention}", "[{}](tg://user?id={})")
             await app.send_message(
                 message.chat.id,
                 men.format(
@@ -85,27 +78,17 @@ async def new_welcome(client, message):
             )
         else:
             await app.send_message(
-                message.chat.id, content, reply_to_message_id=message.message_id
+                message.chat.id, text, reply_to_message_id=message.message_id
             )
 
 
 @app.on_message(filters.command("setwelcome", PREFIX) & filters.me)
 async def setwelcome(client, message):
-    await Zectdb.welcome(message.chat.id, True)
     reply = message.reply_to_message
-    welcome_msg = None
-    media_id = None
-    if reply:
-        if reply.text:
-            welcome_msg = reply.text
-        if reply.media:
-            frwd = await app.copy_message(LOG_CHAT, message.chat.id, reply.message_id)
-            media_id = frwd.message_id
-            caption = frwd.caption
-    else:
-        welcome_msg = get_arg(message)
-    if not welcome_msg and not media_id:
-        await message.edit("**You didn't specify what to reply with.**")
+    if not reply:
+        await message.edit("**Reply to a message or media to set welcome message.**")
         return
-    await Zectdb.set_welcome(message.chat.id, welcome_msg, media_id)
+    frwd = await app.copy_message(LOG_CHAT, message.chat.id, reply.message_id)
+    msg_id = frwd.message_id
+    await Zectdb.save_welcome(str(message.chat.id), msg_id)
     await message.edit("**Welcome message has been saved.**")
