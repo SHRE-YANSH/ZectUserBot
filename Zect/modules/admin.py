@@ -257,7 +257,7 @@ async def promote(client, message: Message):
     try:
         await app.promote_chat_member(message.chat.id, user, can_pin_messages=True)
         await message.edit(
-            f"**{get_user.first_name} is now powered with admin rights!**"
+            f"**{get_user.first_name} is now powered with admin rights with {title} as title!**"
         )
     except Exception as e:
         await message.edit(f"{e}")
@@ -298,6 +298,25 @@ async def demote(client, message: Message):
         )
         await message.edit(
             f"**{get_user.first_name} is now stripped off of their admin rights!**"
+        )
+    except Exception as e:
+        await message.edit(f"{e}")
+
+@app.on_message(filters.command("invite", PREFIX) & filters.me & ~filters.private)
+async def invite(client, message):
+    reply = message.reply_to_message
+    if reply:
+        user = reply.from_user["id"]
+    else:
+        user = get_arg(message)
+        if not user:
+            await message.edit("**I can't invite no-one, can I?**")
+            return
+    get_user = await app.get_users(user)
+    try:
+        await app.add_chat_members(message.chat.id, get_user.id)
+        await message.edit(
+            f"**Added {get_user.first_name} to the chat!**"
         )
     except Exception as e:
         await message.edit(f"{e}")
