@@ -36,7 +36,7 @@ async def del_filterz(client, message):
         await note_.edit("**Filter Not Found!**")
         return
     await del_filters(note_name, int(message.chat.id))
-    await note_.edit(f"**Filter {note_name} Deleted Successfully!**")
+    await note_.edit(f"**Filter `{note_name}` Deleted Successfully!**")
 
 
 @app.on_message(filters.command("filters", PREFIX) & filters.me)
@@ -48,7 +48,7 @@ async def show_filters(client, message):
         return
     kk = ""
     for Escobar in poppy:
-        kk += f"\n > **{Escobar.get('keyword')}**"
+        kk += f"\n ◍ `{Escobar.get('keyword')}`"
     X = await client.get_chat(int(message.chat.id))
     grp_nme = X.title
     mag = f"List Of Filters In {grp_nme}: \n{kk}"
@@ -69,24 +69,7 @@ async def s_filters(client, message):
     msg = message.reply_to_message
     copied_msg = await msg.copy(int(LOG_CHAT))
     await add_filters(note_name, int(message.chat.id), copied_msg.message_id)
-    await note_.edit(f"**Done! {note_name} Added To Filters List!**")
-
-
-@app.on_message(filters.command("filter", PREFIX) & filters.me)
-async def s_filters(client, message):
-    note_ = await message.edit("**Processing..**")
-    note_name = get_arg(message)
-    if not note_name:
-        await note_.edit("**Give A Filter Name!**")
-        return
-    if not message.reply_to_message:
-        await note_.edit("Reply To Message To Save As Filter!")
-        return
-    note_name = note_name.lower()
-    msg = message.reply_to_message
-    copied_msg = await msg.copy(int(LOG_CHAT))
-    await add_filters(note_name, int(message.chat.id), copied_msg.message_id)
-    await note_.edit(f"**Done! {note_name} Added To Filters List!**")
+    await note_.edit(f"**Done! `{note_name}` Added To Filters List!**")
 
 
 @app.on_message(filters.incoming & ~filters.edited & filters.group)
