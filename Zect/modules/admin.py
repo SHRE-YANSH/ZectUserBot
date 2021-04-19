@@ -50,7 +50,7 @@ async def ban_hammer(_, message: Message):
                 chat_id=message.chat.id,
                 user_id=get_user.id,
             )
-            await message.edit(f"Banned {get_user.first_name} from the chat.")
+            await message.edit(f"**Banned {get_user.first_name} from the chat.**")
         except:
             await message.edit("**I can't ban this user.**")
     else:
@@ -71,7 +71,7 @@ async def unban(_, message: Message):
         try:
             get_user = await app.get_users(user)
             await app.unban_chat_member(chat_id=message.chat.id, user_id=get_user.id)
-            await message.edit(f"Unbanned {get_user.first_name} from the chat.")
+            await message.edit(f"**Unbanned {get_user.first_name} from the chat.**")
         except:
             await message.edit("**I can't unban this user.**")
     else:
@@ -103,7 +103,7 @@ async def mute_hammer(_, message: Message):
         else:
             user = get_arg(message)
             if not user:
-                await message.edit("****I can't mute no-one, can I?**")
+                await message.edit("**I can't mute no-one, can I?**")
                 return
         try:
             get_user = await app.get_users(user)
@@ -112,7 +112,7 @@ async def mute_hammer(_, message: Message):
                 user_id=get_user.id,
                 permissions=mute_permission,
             )
-            await message.edit(f"{get_user.first_name} has been muted.")
+            await message.edit(f"**{get_user.first_name} has been muted.**")
         except:
             await message.edit("**I can't mute this user.**")
     else:
@@ -153,7 +153,7 @@ async def unmute(_, message: Message):
                 user_id=get_user.id,
                 permissions=unmute_permissions,
             )
-            await message.edit(f"{get_user.first_name} was unmuted.")
+            await message.edit(f"**{get_user.first_name} was unmuted.**")
         except:
             await message.edit("**I can't unmute this user.**")
     else:
@@ -177,7 +177,7 @@ async def kick_user(_, message: Message):
                 chat_id=message.chat.id,
                 user_id=get_user.id,
             )
-            await message.edit(f"Kicked {get_user.first_name} from the chat.")
+            await message.edit(f"**Kicked {get_user.first_name} from the chat.**")
         except:
             await message.edit("**I can't kick this user.**")
     else:
@@ -241,7 +241,7 @@ async def promote(client, message: Message):
     if await CheckAdmin(message) is False:
         await message.edit("**Am I an admin here?.**")
         return
-    title = ""
+    title = "Admin"
     reply = message.reply_to_message
     if reply:
         user = reply.from_user["id"]

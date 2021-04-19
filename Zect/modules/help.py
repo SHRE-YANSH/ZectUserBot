@@ -30,7 +30,6 @@ async def help(client, message):
         await message.edit(text)
         return
     else:
-        module_name = args
         module_help = CMD_HELP.get(args, False)
         if not module_help:
             await message.edit("__Invalid module name specified.__")
