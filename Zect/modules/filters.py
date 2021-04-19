@@ -85,7 +85,7 @@ async def filter_s(client, message):
     for all_fil in al_fil:
         al_fill.append(all_fil.get("keyword"))
     owoo = owo.lower()
-    if owoo in al_fill:
+    if any(i in owoo for i in al_fill):
         f_info = await filters_info(owoo, int(message.chat.id))
         m_s = await app.get_messages(int(LOG_CHAT), f_info["msg_id"])
         if await is_media(m_s):
