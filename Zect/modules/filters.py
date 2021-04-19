@@ -72,6 +72,23 @@ async def s_filters(client, message):
     await note_.edit(f"**Done! {note_name} Added To Filters List!**")
 
 
+@app.on_message(filters.command("filter", PREFIX) & filters.me)
+async def s_filters(client, message):
+    note_ = await message.edit("**Processing..**")
+    note_name = get_arg(message)
+    if not note_name:
+        await note_.edit("**Give A Filter Name!**")
+        return
+    if not message.reply_to_message:
+        await note_.edit("Reply To Message To Save As Filter!")
+        return
+    note_name = note_name.lower()
+    msg = message.reply_to_message
+    copied_msg = await msg.copy(int(LOG_CHAT))
+    await add_filters(note_name, int(message.chat.id), copied_msg.message_id)
+    await note_.edit(f"**Done! {note_name} Added To Filters List!**")
+
+
 @app.on_message(filters.incoming & ~filters.edited & filters.group)
 async def filter_s(client, message):
     owo = message.text
@@ -81,14 +98,13 @@ async def filter_s(client, message):
         return
     al_fil = await all_filters(int(message.chat.id))
     if not al_fil:
-        message.continue_propagation()
         return
     for all_fil in al_fil:
         al_fill.append(all_fil.get("keyword"))
     owoo = owo.lower()
     if owoo in al_fill:
         f_info = await filters_info(owoo, int(message.chat.id))
-        m_s = await client.get_messages(int(LOG_CHAT), f_info["msg_id"])
+        m_s = await app.get_messages(int(LOG_CHAT), f_info["msg_id"])
         if await is_media(m_s):
             text_ = m_s.caption or ""
             is_m = True
@@ -117,7 +133,6 @@ async def filter_s(client, message):
                 caption=text_,
                 reply_to_message_id=message.message_id,
             )
-
 
 async def is_media(message):
     if not (
