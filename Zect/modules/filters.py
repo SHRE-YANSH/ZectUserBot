@@ -72,6 +72,23 @@ async def s_filters(client, message):
     await note_.edit(f"**Done! {note_name} Added To Filters List!**")
 
 
+@app.on_message(filters.command("filter", PREFIX) & filters.me)
+async def s_filters(client, message):
+    note_ = await message.edit("**Processing..**")
+    note_name = get_arg(message)
+    if not note_name:
+        await note_.edit("**Give A Filter Name!**")
+        return
+    if not message.reply_to_message:
+        await note_.edit("Reply To Message To Save As Filter!")
+        return
+    note_name = note_name.lower()
+    msg = message.reply_to_message
+    copied_msg = await msg.copy(int(LOG_CHAT))
+    await add_filters(note_name, int(message.chat.id), copied_msg.message_id)
+    await note_.edit(f"**Done! {note_name} Added To Filters List!**")
+
+
 @app.on_message(filters.incoming & ~filters.edited & filters.group)
 async def filter_s(client, message):
     owo = message.text
@@ -116,7 +133,6 @@ async def filter_s(client, message):
                 caption=text_,
                 reply_to_message_id=message.message_id,
             )
-
 
 async def is_media(message):
     if not (
