@@ -90,7 +90,7 @@ async def filter_s(client, message):
         pattern = r"( |^|[^\w])" + re.escape(filter_s) + r"( |$|[^\w])"
         if re.search(pattern, owo, flags=re.IGNORECASE):
             f_info = await filters_info(filter_s, int(message.chat.id))
-            m_s = await client.get_messages(int(Config.LOG_GRP), f_info["msg_id"])
+            m_s = await client.get_messages(int(LOG_CHAT), f_info["msg_id"])
             if await is_media(m_s):
                 text_ = m_s.caption or ""
                 is_m = True
