@@ -39,7 +39,7 @@ async def del_filterz(client, message):
     await note_.edit(f"**Filter `{note_name}` Deleted Successfully!**")
 
 
-@app.on_message(filters.command("filters", PREFIX) & filters.me)
+@app.on_message(filters.command("filters", PREFIX) & filters.me, group=-2)
 async def show_filters(client, message):
     pablo = await message.edit("**Processing..**")
     poppy = await all_filters(int(message.chat.id))
