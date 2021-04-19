@@ -87,7 +87,7 @@ async def filter_s(client, message):
     owoo = owo.lower()
     check = any(i in owoo for i in al_fill)
     if check:
-        f_info = await filters_info(owoo, int(message.chat.id))
+        f_info = await filters_info(owo.lower(), int(message.chat.id))
         m_s = await app.get_messages(int(LOG_CHAT), f_info["msg_id"])
         if await is_media(m_s):
             text_ = m_s.caption or ""
