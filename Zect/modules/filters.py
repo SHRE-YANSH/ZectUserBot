@@ -1,5 +1,6 @@
-from pyrogram import filters
+import re
 
+from pyrogram import filters
 from Zect import app, CMD_HELP
 from config import PREFIX, LOG_CHAT
 from Zect.helpers.pyrohelper import get_arg
@@ -85,42 +86,34 @@ async def filter_s(client, message):
     for all_fil in al_fil:
         al_fill.append(all_fil.get("keyword"))
     owoo = owo.lower()
-    check = any(i in owoo for i in al_fill)
-    key = ""
-    if check:
-        for i in al_fill:
-            if i in owoo:
-                key += i
-        f_info = await filters_info(key, int(message.chat.id))
-        m_s = await app.get_messages(int(LOG_CHAT), f_info["msg_id"])
-        if await is_media(m_s):
-            text_ = m_s.caption or ""
-            is_m = True
-        else:
-            text_ = m_s.text or ""
-        if text_ != "":
-            mention = message.from_user.mention
-            user_id = message.from_user.id
-            user_name = message.from_user.username or "No Username"
-            first_name = message.from_user.first_name
-            last_name = message.from_user.last_name or "No Last Name"
-            text_ = text_.format(
-                mention=mention,
-                user_id=user_id,
-                user_name=user_name,
-                first_name=first_name,
-                last_name=last_name,
-            )
-        if not is_m:
-            await app.send_message(
-                message.chat.id, text_, reply_to_message_id=message.message_id
-            )
-        else:
-            await m_s.copy(
+    for filter_s in al_fill:
+        pattern = r"( |^|[^\w])" + re.escape(filter_s) + r"( |$|[^\w])"
+        if re.search(pattern, owo, flags=re.IGNORECASE):
+            f_info = await filters_info(filter_s, int(message.chat.id))
+            m_s = await client.get_messages(int(Config.LOG_GRP), f_info["msg_id"])
+            if await is_media(m_s):
+                text_ = m_s.caption or ""
+                is_m = True
+            else:
+                text_ = m_s.text or ""
+            if text_ != "":
+                mention = message.from_user.mention
+                user_id = message.from_user.id
+                user_name = message.from_user.username or "No Username"
+                first_name = message.from_user.first_name
+                last_name = message.from_user.last_name or "No Last Name"
+                text_ = text_.format(mention=mention, user_id=user_id, user_name=user_name, first_name=first_name, last_name=last_name)
+            if not is_m:
+                await client.send_message(
+                message.chat.id,
+                text_,
+                reply_to_message_id=message.message_id)
+            else:
+                await m_s.copy(
                 chat_id=int(message.chat.id),
                 caption=text_,
                 reply_to_message_id=message.message_id,
-            )
+        )
 
 async def is_media(message):
     if not (
