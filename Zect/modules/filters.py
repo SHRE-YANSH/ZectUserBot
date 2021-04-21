@@ -73,7 +73,7 @@ async def s_filters(client, message):
     await note_.edit(f"**Done! `{note_name}` Added To Filters List!**")
 
 
-@app.on_message(filters.incoming & ~filters.edited & filters.group, group=-1)
+"""@app.on_message(filters.incoming & ~filters.edited & filters.group, group=-1)
 async def filter_s(client, message):
     owo = message.text
     al_fill = []
@@ -113,7 +113,7 @@ async def filter_s(client, message):
                 chat_id=int(message.chat.id),
                 caption=text_,
                 reply_to_message_id=message.message_id,
-        )
+        )"""
 
 async def is_media(message):
     if not (
