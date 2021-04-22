@@ -73,7 +73,7 @@ async def s_filters(client, message):
     await note_.edit(f"**Done! `{note_name}` Added To Filters List!**")
 
 
-@app.on_message(filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me)
+@app.on_message(filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me, group=-3)
 async def filter_s(client, message):
     owo = message.text
     al_fill = []
