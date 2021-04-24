@@ -52,7 +52,10 @@ async def get(client, message):
     if not note:
         await message.edit(f"**Note {note_name} dosen't exists**")
         return
-    await app.copy_message(message.chat.id, LOG_CHAT, note)
+    if message.reply_to_message:
+        await app.copy_message(message.chat.id, LOG_CHAT, note, reply_to_message_id=message.message_id)
+    else:
+        await app.copy_message(message.chat.id, LOG_CHAT, note)
     await message.delete()
 
 
