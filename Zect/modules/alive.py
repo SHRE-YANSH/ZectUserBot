@@ -1,3 +1,11 @@
+# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+#
+# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+#
+# All rights reserved.
+
 from config import PREFIX
 import asyncio
 import time
@@ -63,7 +71,12 @@ async def alive(_, m):
     photo = "https://telegra.ph//file/dcd069c3eb26c9fa3011d.jpg"
     await m.delete()
     if m.reply_to_message:
-        await app.send_photo(m.chat.id, photo, caption=reply_msg, reply_to_message_id=m.reply_to_message.message_id)
+        await app.send_photo(
+            m.chat.id,
+            photo,
+            caption=reply_msg,
+            reply_to_message_id=m.reply_to_message.message_id,
+        )
     else:
         await app.send_photo(m.chat.id, photo, caption=reply_msg)
 

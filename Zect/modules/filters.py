@@ -1,3 +1,11 @@
+# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+#
+# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+#
+# All rights reserved.
+
 import re
 
 from pyrogram import filters
@@ -73,7 +81,10 @@ async def s_filters(client, message):
     await note_.edit(f"**Done! `{note_name}` Added To Filters List!**")
 
 
-@app.on_message(filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me, group=-3)
+@app.on_message(
+    filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me,
+    group=-3,
+)
 async def filter_s(client, message):
     owo = message.text
     al_fill = []
@@ -102,18 +113,24 @@ async def filter_s(client, message):
                 user_name = message.from_user.username or "No Username"
                 first_name = message.from_user.first_name
                 last_name = message.from_user.last_name or "No Last Name"
-                text_ = text_.format(mention=mention, user_id=user_id, user_name=user_name, first_name=first_name, last_name=last_name)
+                text_ = text_.format(
+                    mention=mention,
+                    user_id=user_id,
+                    user_name=user_name,
+                    first_name=first_name,
+                    last_name=last_name,
+                )
             if not is_m:
                 await client.send_message(
-                message.chat.id,
-                text_,
-                reply_to_message_id=message.message_id)
+                    message.chat.id, text_, reply_to_message_id=message.message_id
+                )
             else:
                 await m_s.copy(
-                chat_id=int(message.chat.id),
-                caption=text_,
-                reply_to_message_id=message.message_id,
-        )
+                    chat_id=int(message.chat.id),
+                    caption=text_,
+                    reply_to_message_id=message.message_id,
+                )
+
 
 async def is_media(message):
     if not (

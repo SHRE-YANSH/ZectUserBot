@@ -1,15 +1,25 @@
+# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+#
+# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+#
+# All rights reserved.
+
 import logging
 import sys
 import time
-import pyromod.listen
 from pyrogram import Client, errors
 from config import API_HASH, API_ID, SESSION
 import logging
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+import logging
 
+logging.basicConfig(
+    filename="app.log",
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+)
 LOGGER = logging.getLogger(__name__)
 
 HELP = {}

@@ -1,3 +1,11 @@
+# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+#
+# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+#
+# All rights reserved.
+
 import time
 import asyncio
 from pyrogram import filters
@@ -6,7 +14,7 @@ from pyrogram.types import Message, ChatPermissions
 from pyrogram.errors import UserAdminInvalid
 from pyrogram.methods.chats.get_chat_members import Filters as ChatMemberFilters
 
-from Zect import app, CMD_HELP
+from Zect import app, CMD_HELP, LOGGER
 from Zect.helpers.pyrohelper import get_arg, get_args
 from Zect.helpers.adminhelpers import CheckAdmin
 from config import PREFIX
