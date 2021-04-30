@@ -34,7 +34,14 @@ infotext = (
     " > UserID: `{user_id}`\n"
     " > First Name: `{first_name}`\n"
     " > Last Name: `{last_name}`\n"
-    " > Username: @{username}\n"
+    " > Username: {username}\n"
+    " > DC: {dc_id}\n"
+    " > Status: {status}\n"
+    " > Is Scam: {scam}\n"
+    " > Is Bot: {bot}\n"
+    " > Is Verified: {verifies}\n"
+    " > Is Contact: {contact}\n"
+    " > Total Groups In Common: {common}"
 )
 
 
@@ -60,6 +67,7 @@ async def whois(client, message):
     except PeerIdInvalid:
         await message.reply("I don't know that User.")
         return
+    common = await app.get_common_chats(user.id)
     pfp = await app.get_profile_photos(user.id)
     if not pfp:
         await message.edit_text(
@@ -69,6 +77,13 @@ async def whois(client, message):
                 first_name=user.first_name,
                 last_name=user.last_name or "",
                 username=user.username or "",
+                dc_id=user.dc_id or "1",
+                status=user.status or "None",
+                scam=user.is_scam,
+                bot=user.is_bot,
+                Verified=user.is_verified,
+                contact=user.is_contact,
+                common=len(common),
             ),
             disable_web_page_preview=True,
         )
@@ -84,6 +99,13 @@ async def whois(client, message):
                 first_name=user.first_name,
                 last_name=user.last_name or "",
                 username=user.username or "",
+                dc_id=user.dc_id or "1",
+                status=user.status or "None",
+                scam=user.is_scam,
+                bot=user.is_bot,
+                Verified=user.is_verified,
+                contact=user.is_contact,
+                common=len(common),
             ),
             reply_to_message_id=message.reply_to_message.message_id
             if message.reply_to_message
