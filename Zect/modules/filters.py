@@ -83,7 +83,7 @@ async def s_filters(client, message):
 
 @app.on_message(
     filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me,
-    group=-3,
+    group=3,
 )
 async def filter_s(client, message):
     owo = message.text
