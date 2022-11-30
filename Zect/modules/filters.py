@@ -38,7 +38,7 @@ async def del_filterz(client, message):
     note_ = await message.edit("**Processing..**")
     note_name = get_arg(message)
     if not note_name:
-        await note_.edit("**Give A Filter Name!**")
+        await note_.edit("**Give A Name!**")
         return
     note_name = note_name.lower()
     if not await filters_info(note_name, int(message.chat.id)):
