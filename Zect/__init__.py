@@ -10,9 +10,7 @@ import logging
 import sys
 import time
 from pyrogram import Client, errors
-from config import API_HASH, API_ID, SESSION
-import logging
-
+from config import API_HASH, API_ID
 import logging
 
 logging.basicConfig(
@@ -29,6 +27,5 @@ StartTime = time.time()
 
 API_ID = API_ID
 API_HASH = API_HASH
-SESSION = SESSION
 
-app = Client(SESSION, api_id=API_ID, api_hash=API_HASH)
+app = Client("zect", api_id=API_ID, api_hash=API_HASH)

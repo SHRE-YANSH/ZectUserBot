@@ -23,7 +23,6 @@ HELP.update(
         "**Anti-PM**": "__pmguard, setpmmsg, setlimit, setblockmsg, allow, deny__",
         "**Sticker**": "__kang, stkrinfo__",
         "**Greetings**": "__setwelcome, clearwelcome__",
-        "**Updater**": "__update__",
     }
 )
 
