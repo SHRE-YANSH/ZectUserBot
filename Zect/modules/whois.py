@@ -68,7 +68,7 @@ async def whois(client, message):
         await message.reply("I don't know that User.")
         return
     common = await app.get_common_chats(user.id)
-    pfp = await app.get_profile_photos(user.id)
+    pfp = [x async for x in app.get_chat_photos(user.id, limit=1)]
     if not pfp:
         await message.edit_text(
             infotext.format(
@@ -88,7 +88,7 @@ async def whois(client, message):
             disable_web_page_preview=True,
         )
     else:
-        dls = await app.download_media(pfp[0]["file_id"], file_name=f"{user.id}.png")
+        dls = await app.download_media(pfp[0].file_id, file_name=f"{user.id}.png")
         await message.delete()
         await app.send_document(
             message.chat.id,
