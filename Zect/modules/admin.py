@@ -1,20 +1,20 @@
-# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+# Copyright (C) 2020-2021 by shre-yansh@Github, < https://github.com/shre-yansh >.
 #
-# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+# This file is part of < https://github.com/shre-yansh/ZectUserBot > project,
+# and is released under the "AGP v3.0 License Agreement".
+# Please see < https://github.com/shre-yansh/ZectUserBot/blob/master/LICENSE >
 #
 # All rights reserved.
 
 import time
 import asyncio
 from pyrogram import filters
-from pyrogram.types import Message, ChatPermissions
+from pyrogram.types import Message, ChatPermissions, ChatPrivileges
 
 from pyrogram.errors import UserAdminInvalid
-from pyrogram.methods.chats.get_chat_members import Filters as ChatMemberFilters
 
 from Zect import app, CMD_HELP, LOGGER
+from pyrogram import enums
 from Zect.helpers.pyrohelper import get_arg, get_args
 from Zect.helpers.adminhelpers import CheckAdmin
 from config import PREFIX
@@ -54,7 +54,7 @@ async def ban_hammer(_, message: Message):
                 return
         try:
             get_user = await app.get_users(user)
-            await app.kick_chat_member(
+            await app.ban_chat_member(
                 chat_id=message.chat.id,
                 user_id=get_user.id,
             )
@@ -90,10 +90,7 @@ async def unban(_, message: Message):
 mute_permission = ChatPermissions(
     can_send_messages=False,
     can_send_media_messages=False,
-    can_send_stickers=False,
-    can_send_animations=False,
-    can_send_games=False,
-    can_use_inline_bots=False,
+    can_send_other_messages=False,
     can_add_web_page_previews=False,
     can_send_polls=False,
     can_change_info=False,
@@ -131,14 +128,10 @@ async def mute_hammer(_, message: Message):
 unmute_permissions = ChatPermissions(
     can_send_messages=True,
     can_send_media_messages=True,
-    can_send_stickers=True,
-    can_send_animations=True,
-    can_send_games=True,
-    can_use_inline_bots=True,
+    can_send_other_messages=True,
     can_add_web_page_previews=True,
     can_send_polls=True,
     can_change_info=False,
-    can_invite_users=True,
     can_pin_messages=False,
 )
 
@@ -181,7 +174,11 @@ async def kick_user(_, message: Message):
                 return
         try:
             get_user = await app.get_users(user)
-            await app.kick_chat_member(
+            await app.ban_chat_member(
+                chat_id=message.chat.id,
+                user_id=get_user.id,
+            )
+            await app.unban_chat_member(
                 chat_id=message.chat.id,
                 user_id=get_user.id,
             )
@@ -194,17 +191,9 @@ async def kick_user(_, message: Message):
 
 @app.on_message(filters.command("pin", PREFIX) & filters.me)
 async def pin_message(_, message: Message):
-    # First of all check if its a group or not
-    if message.chat.type in ["group", "supergroup"]:
-        # Here lies the sanity checks
-        admins = await app.get_chat_members(
-            message.chat.id, filter=ChatMemberFilters.ADMINISTRATORS
-        )
-        admin_ids = [user.user.id for user in admins]
-        me = await app.get_me()
-
-        # If you are an admin
-        if me.id in admin_ids:
+    chat_type  = [enums.ChatType.SUPERGROUP, enums.ChatType.CHANNEL]
+    if message.chat.type in chat_type:
+        if await CheckAdmin(message=message):
             # If you replied to a message so that we can pin it.
             if message.reply_to_message:
                 disable_notification = True
@@ -220,7 +209,7 @@ async def pin_message(_, message: Message):
                 # Pin the fucking message.
                 await app.pin_chat_message(
                     message.chat.id,
-                    message.reply_to_message.message_id,
+                    message.reply_to_message.id,
                     disable_notification=disable_notification,
                 )
                 await message.edit("`Pinned message!`")
@@ -264,7 +253,14 @@ async def promote(client, message: Message):
             title = " ".join(args[1:])
     get_user = await app.get_users(user)
     try:
-        await app.promote_chat_member(message.chat.id, user, can_pin_messages=True)
+        await app.promote_chat_member(message.chat.id, user, ChatPrivileges(
+            can_delete_messages=True,
+            can_manage_chat=True,
+            can_invite_users=True,
+            can_change_info=False,
+            can_pin_messages=True,
+            can_restrict_members=True
+            ))
         await message.edit(
             f"**{get_user.first_name} is now powered with admin rights with {title} as title!**"
         )
@@ -295,15 +291,7 @@ async def demote(client, message: Message):
         await app.promote_chat_member(
             message.chat.id,
             user,
-            is_anonymous=False,
-            can_change_info=False,
-            can_delete_messages=False,
-            can_edit_messages=False,
-            can_invite_users=False,
-            can_promote_members=False,
-            can_restrict_members=False,
-            can_pin_messages=False,
-            can_post_messages=False,
+            ChatPrivileges(can_manage_chat=False)
         )
         await message.edit(
             f"**{get_user.first_name} is now stripped off of their admin rights!**"
