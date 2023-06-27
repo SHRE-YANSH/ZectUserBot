@@ -1,8 +1,8 @@
-# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+# Copyright (C) 2020-2021 by shre-yansh@Github, < https://github.com/shre-yansh >.
 #
-# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+# This file is part of < https://github.com/shre-yansh/ZectUserBot > project,
+# and is released under the "AGP v3.0 License Agreement".
+# Please see < https://github.com/shre-yansh/ZectUserBot/blob/master/LICENSE >
 #
 # All rights reserved.
 
@@ -15,6 +15,7 @@ import subprocess
 from io import StringIO
 from Zect import app, CMD_HELP
 from pyrogram import filters
+from pyrogram.types import Message
 
 CMD_HELP.update(
     {
@@ -43,9 +44,9 @@ async def evaluate(client, message):
     except IndexError:
         await status_message.delete()
         return
-    reply_to_id = message.message_id
+    reply_to_id = message.id
     if message.reply_to_message:
-        reply_to_id = message.reply_to_message.message_id
+        reply_to_id = message.reply_to_message.id
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = StringIO()
@@ -139,7 +140,7 @@ async def terminal(client, message):
             await client.send_document(
                 message.chat.id,
                 "output.txt",
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=message.id,
                 caption="`Output file`",
             )
             os.remove("output.txt")
@@ -147,3 +148,11 @@ async def terminal(client, message):
         await message.edit(f"**Output:**\n```{output}```", parse_mode="markdown")
     else:
         await message.edit("**Output:**\n`No Output`")
+
+@app.on_message(filters.command("logs", PREFIX) & filters.me)
+async def logs(_, message: Message):
+    try:
+        await app.send_document(message.chat.id, "error.log")
+        await message.delete()
+    except ValueError:
+        await message.edit("No logs are there")

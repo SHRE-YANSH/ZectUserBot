@@ -1,4 +1,7 @@
-config.py
 *.session
 *.session-journal
 __pycache__/
+.venv/
+downloads/
+.vscode/
+error.log

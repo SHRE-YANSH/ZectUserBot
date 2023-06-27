@@ -1,8 +1,8 @@
-# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+# Copyright (C) 2020-2021 by shre-yansh@Github, < https://github.com/shre-yansh >.
 #
-# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+# This file is part of < https://github.com/shre-yansh/ZectUserBot > project,
+# and is released under the "AGP v3.0 License Agreement".
+# Please see < https://github.com/shre-yansh/ZectUserBot/blob/master/LICENSE >
 #
 # All rights reserved.
 
@@ -44,8 +44,8 @@ async def save(client, message):
     if not reply:
         await message.edit("Reply to a message to save a note")
         return
-    copy = await app.copy_message(LOG_CHAT, message.chat.id, reply.message_id)
-    await Zect.save_note(note_name, copy.message_id)
+    copy = await app.copy_message(LOG_CHAT, message.chat.id, reply.id)
+    await Zect.save_note(note_name, copy.id)
     await message.edit("**Note saved**")
 
 
@@ -65,7 +65,7 @@ async def get(client, message):
             message.chat.id,
             LOG_CHAT,
             note,
-            reply_to_message_id=message.reply_to_message.message_id,
+            reply_to_message_id=message.reply_to_message.id,
         )
     else:
         await app.copy_message(message.chat.id, LOG_CHAT, note)

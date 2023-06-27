@@ -1,8 +1,8 @@
-# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+# Copyright (C) 2020-2021 by shre-yansh@Github, < https://github.com/shre-yansh >.
 #
-# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+# This file is part of < https://github.com/shre-yansh/ZectUserBot > project,
+# and is released under the "AGP v3.0 License Agreement".
+# Please see < https://github.com/shre-yansh/ZectUserBot/blob/master/LICENSE >
 #
 # All rights reserved.
 
@@ -53,7 +53,7 @@ async def new_welcome(client, message):
                     message.new_chat_members[0]["first_name"],
                     message.new_chat_members[0]["id"],
                 ),
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=message.id,
             )
         if msg.animation and caption is not None:
             await app.send_animation(
@@ -63,13 +63,13 @@ async def new_welcome(client, message):
                     message.new_chat_members[0]["first_name"],
                     message.new_chat_members[0]["id"],
                 ),
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=message.id,
             )
         if msg.sticker:
             await app.send_sticker(
                 message.chat.id,
                 msg.sticker.file_id,
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=message.id,
             )
 
     else:
@@ -82,11 +82,11 @@ async def new_welcome(client, message):
                     message.new_chat_members[0]["first_name"],
                     message.new_chat_members[0]["id"],
                 ),
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=message.id,
             )
         else:
             await app.send_message(
-                message.chat.id, text, reply_to_message_id=message.message_id
+                message.chat.id, text, reply_to_message_id=message.id
             )
 
 
@@ -96,7 +96,7 @@ async def setwelcome(client, message):
     if not reply:
         await message.edit("**Reply to a message or media to set welcome message.**")
         return
-    frwd = await app.copy_message(LOG_CHAT, message.chat.id, reply.message_id)
-    msg_id = frwd.message_id
+    frwd = await app.copy_message(LOG_CHAT, message.chat.id, reply.id)
+    msg_id = frwd.id
     await Zectdb.save_welcome(str(message.chat.id), msg_id)
     await message.edit("**Welcome message has been saved.**")

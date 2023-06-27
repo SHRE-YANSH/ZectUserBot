@@ -1,8 +1,8 @@
-# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+# Copyright (C) 2020-2021 by shre-yansh@Github, < https://github.com/shre-yansh >.
 #
-# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+# This file is part of < https://github.com/shre-yansh/ZectUserBot > project,
+# and is released under the "AGP v3.0 License Agreement".
+# Please see < https://github.com/shre-yansh/ZectUserBot/blob/master/LICENSE >
 #
 # All rights reserved.
 

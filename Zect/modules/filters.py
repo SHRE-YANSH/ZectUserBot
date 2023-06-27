@@ -1,8 +1,8 @@
-# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+# Copyright (C) 2020-2021 by shre-yansh@Github, < https://github.com/shre-yansh >.
 #
-# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+# This file is part of < https://github.com/shre-yansh/ZectUserBot > project,
+# and is released under the "AGP v3.0 License Agreement".
+# Please see < https://github.com/shre-yansh/ZectUserBot/blob/master/LICENSE >
 #
 # All rights reserved.
 
@@ -77,12 +77,12 @@ async def s_filters(client, message):
     note_name = note_name.lower()
     msg = message.reply_to_message
     copied_msg = await msg.copy(int(LOG_CHAT))
-    await add_filters(note_name, int(message.chat.id), copied_msg.message_id)
+    await add_filters(note_name, int(message.chat.id), copied_msg.id)
     await note_.edit(f"**Done! `{note_name}` Added To Filters List!**")
 
 
 @app.on_message(
-    filters.incoming & ~filters.edited & filters.group & ~filters.private & ~filters.me,
+    filters.incoming & filters.group & ~filters.private & ~filters.me,
     group=3,
 )
 async def filter_s(client, message):
@@ -122,13 +122,13 @@ async def filter_s(client, message):
                 )
             if not is_m:
                 await client.send_message(
-                    message.chat.id, text_, reply_to_message_id=message.message_id
+                    message.chat.id, text_, reply_to_message_id=message.id
                 )
             else:
                 await m_s.copy(
                     chat_id=int(message.chat.id),
                     caption=text_,
-                    reply_to_message_id=message.message_id,
+                    reply_to_message_id=message.id,
                 )
 
 

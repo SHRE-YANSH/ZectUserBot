@@ -1,8 +1,8 @@
-# Copyright (C) 2020-2021 by okay-retard@Github, < https://github.com/okay-retard >.
+# Copyright (C) 2020-2021 by shre-yansh@Github, < https://github.com/shre-yansh >.
 #
-# This file is part of < https://github.com/okay-retard/ZectUserBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/okay-retard/ZectUserBot/blob/master/LICENSE >
+# This file is part of < https://github.com/shre-yansh/ZectUserBot > project,
+# and is released under the "AGP v3.0 License Agreement".
+# Please see < https://github.com/shre-yansh/ZectUserBot/blob/master/LICENSE >
 #
 # All rights reserved.
 
@@ -97,8 +97,8 @@ async def kang(client, message):
             cmd = "/newanimated"
         exist = False
         try:
-            exist = await app.send(
-                GetStickerSet(stickerset=InputStickerSetShortName(short_name=packname))
+            exist = await app.invoke(
+                GetStickerSet(stickerset=InputStickerSetShortName(short_name=packname), hash=0)
             )
         except StickersetInvalid:
             pass
@@ -187,7 +187,7 @@ async def kang(client, message):
             await app.send_message("Stickers", packname)
         out = f"[kanged](t.me/addstickers/{packname})"
         await message.edit(f"**Sticker** {out}**!**")
-        await app.read_history("Stickers")
+        await app.read_chat_history("Stickers")
         if os.path.exists(str(photo)):
             os.remove(photo)
 
@@ -202,9 +202,9 @@ async def sticker_pack_info_(client, message):
         await message.edit("`Reply to a sticker to get the pack details`")
         return
     await message.edit("`Fetching details of the sticker pack, please wait..`")
-    get_stickerset = await app.send(
+    get_stickerset = await app.invoke(
         GetStickerSet(
-            stickerset=InputStickerSetShortName(short_name=replied.sticker.set_name)
+            stickerset=InputStickerSetShortName(short_name=replied.sticker.set_name,), hash=0
         )
     )
     pack_emojis = []
@@ -239,7 +239,7 @@ def resize_photo(photo: str) -> io.BytesIO:
 
 
 async def get_response(message):
-    return [x async for x in app.iter_history("Stickers", limit=1)][0].text
+    return [x async for x in app.get_chat_history("Stickers", limit=1)][0].text
 
 
 KANGING_STR = (

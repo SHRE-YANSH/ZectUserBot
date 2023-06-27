@@ -11,8 +11,10 @@ from datetime import datetime
 import asyncio
 from pyrogram import filters
 from pyrogram.types import Message
+from pyrogram import enums
 from inspect import getfullargspec
 from Zect import app
+from Zect.helpers.adminhelpers import CheckAdmin
 from config import PREFIX
 
 
@@ -22,20 +24,13 @@ async def edrep(msg: Message, **kwargs):
     await func(**{k: v for k, v in kwargs.items() if k in spec})
 
 
-async def admin_check(message: Message) -> bool:
-    client = message._client
-    chat_id = message.chat.id
-    user_id = message.from_user.id
-
-    check_status = await client.get_chat_member(chat_id=chat_id, user_id=user_id)
-    admin_strings = ["creator", "administrator"]
-    return check_status.status in admin_strings
 
 
 @app.on_message(filters.command("purge", ".") & filters.me)
 async def purge_message(client, message):
-    if message.chat.type in (("supergroup", "channel")):
-        is_admin = await admin_check(message)
+    chat_type  = [enums.ChatType.SUPERGROUP, enums.ChatType.CHANNEL]
+    if message.chat.type in chat_type:
+        is_admin = await CheckAdmin(message)
         if not is_admin:
             await message.delete()
             return
@@ -47,7 +42,7 @@ async def purge_message(client, message):
     count_del_etion_s = 0
     if message.reply_to_message:
         for a_s_message_id in range(
-            message.reply_to_message.message_id, message.message_id
+            message.reply_to_message.id, message.id
         ):
             message_ids.append(a_s_message_id)
             if len(message_ids) == 100:
