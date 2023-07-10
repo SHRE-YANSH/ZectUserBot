@@ -9,7 +9,8 @@
 from Zect import app
 from config import PREFIX
 
-from pyrogram import filters
+from pyrogram import filters, Client
+from pyrogram.types import Message
 
 from Zect.database.gmutedb import get_gmuted_users, gmute_user, ungmute_user
 from Zect.helpers.pyrohelper import get_arg
@@ -20,7 +21,7 @@ from Zect.helpers.adminhelpers import CheckAdmin
 async def gmute(_, message):
     reply = message.reply_to_message
     if reply:
-        user = reply.from_user["id"]
+        user = reply.from_user.id
     else:
         user = get_arg(message)
         if not user:
@@ -35,7 +36,7 @@ async def gmute(_, message):
 async def gmute(_, message):
     reply = message.reply_to_message
     if reply:
-        user = reply.from_user["id"]
+        user = reply.from_user.id
     else:
         user = get_arg(message)
         if not user:
@@ -45,6 +46,14 @@ async def gmute(_, message):
     await ungmute_user(get_user.id)
     await message.edit(f"**Unmuted {get_user.first_name}, enjoy!**")
 
+async def check_prefix(filter, client: Client, message: Message):
+    if(message.text and (message.text).startswith(PREFIX + PREFIX)):
+        return True
+    return False
+
+@app.on_message(filters.me & filters.outgoing & filters.create(check_prefix))
+async def change_cmd(client, message):
+    await message.edit(f"`{message.text[1:]}`")
 
 @app.on_message(filters.group & filters.incoming)
 async def check_and_del(client, message):

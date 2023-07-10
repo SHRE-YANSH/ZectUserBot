@@ -148,11 +148,3 @@ async def terminal(client, message):
         await message.edit(f"**Output:**\n```{output}```", parse_mode="markdown")
     else:
         await message.edit("**Output:**\n`No Output`")
-
-@app.on_message(filters.command("logs", PREFIX) & filters.me)
-async def logs(_, message: Message):
-    try:
-        await app.send_document(message.chat.id, "error.log")
-        await message.delete()
-    except ValueError:
-        await message.edit("No logs are there")

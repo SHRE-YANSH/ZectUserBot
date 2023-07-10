@@ -8,7 +8,7 @@
 
 from pyrogram import idle, Client, filters
 from config import PREFIX
-from Zect import app, LOGGER
+from Zect import app
 import logging
 from Zect.modules import *
 

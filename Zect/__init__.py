@@ -13,12 +13,13 @@ from pyrogram import Client, errors
 from config import API_HASH, API_ID
 import logging
 
+
 logging.basicConfig(
-    filename="error.log",
-    level=logging.ERROR,
-    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+    level=logging.INFO,
+    format="%(asctime)s - [Zect] - %(levelname)s - %(message)s",
 )
-LOGGER = logging.getLogger(__name__)
+logging.getLogger("pyrogram").setLevel(logging.ERROR)
+logging.getLogger("apscheduler").setLevel(logging.ERROR)
 
 HELP = {}
 CMD_HELP = {}

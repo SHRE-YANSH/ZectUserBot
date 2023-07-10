@@ -13,7 +13,7 @@ from pyrogram.types import Message, ChatPermissions, ChatPrivileges
 
 from pyrogram.errors import UserAdminInvalid
 
-from Zect import app, CMD_HELP, LOGGER
+from Zect import app, CMD_HELP
 from pyrogram import enums
 from Zect.helpers.pyrohelper import get_arg, get_args
 from Zect.helpers.adminhelpers import CheckAdmin
