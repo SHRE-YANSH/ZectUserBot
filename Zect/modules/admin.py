@@ -46,7 +46,7 @@ async def ban_hammer(_, message: Message):
     if await CheckAdmin(message) is True:
         reply = message.reply_to_message
         if reply:
-            user = reply.from_user["id"]
+            user = reply.from_user.id
         else:
             user = get_arg(message)
             if not user:
@@ -70,7 +70,7 @@ async def unban(_, message: Message):
     if await CheckAdmin(message) is True:
         reply = message.reply_to_message
         if reply:
-            user = reply.from_user["id"]
+            user = reply.from_user.id
         else:
             user = get_arg(message)
             if not user:
@@ -104,7 +104,7 @@ async def mute_hammer(_, message: Message):
     if await CheckAdmin(message) is True:
         reply = message.reply_to_message
         if reply:
-            user = reply.from_user["id"]
+            user = reply.from_user.id
         else:
             user = get_arg(message)
             if not user:
@@ -141,7 +141,7 @@ async def unmute(_, message: Message):
     if await CheckAdmin(message) is True:
         reply = message.reply_to_message
         if reply:
-            user = reply.from_user["id"]
+            user = reply.from_user.id
         else:
             user = get_arg(message)
             if not user:
@@ -166,7 +166,7 @@ async def kick_user(_, message: Message):
     if await CheckAdmin(message) is True:
         reply = message.reply_to_message
         if reply:
-            user = reply.from_user["id"]
+            user = reply.from_user.id
         else:
             user = get_arg(message)
             if not user:
@@ -241,7 +241,7 @@ async def promote(client, message: Message):
     title = "Admin"
     reply = message.reply_to_message
     if reply:
-        user = reply.from_user["id"]
+        user = reply.from_user.id
         title = str(get_arg(message))
     else:
         args = get_args(message)
@@ -280,7 +280,7 @@ async def demote(client, message: Message):
         return
     reply = message.reply_to_message
     if reply:
-        user = reply.from_user["id"]
+        user = reply.from_user.id
     else:
         user = get_arg(message)
         if not user:
@@ -304,7 +304,7 @@ async def demote(client, message: Message):
 async def invite(client, message):
     reply = message.reply_to_message
     if reply:
-        user = reply.from_user["id"]
+        user = reply.from_user.id
     else:
         user = get_arg(message)
         if not user:
