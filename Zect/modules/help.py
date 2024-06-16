@@ -18,6 +18,7 @@ HELP.update(
         "**Alive**": "__alive, ping__",
         "**Developer**": "__eval, term, log__",
         "**Filters**": "__filter, filters, stop, stopall__",
+        "**Loader**": "__install__",
         "**Misc**": "__paste, whois, id__",
         "**Notes**": "__save, get, clear, clearall, notes__",
         "**Anti-PM**": "__pmguard, setpmmsg, setlimit, setblockmsg, allow, deny__",

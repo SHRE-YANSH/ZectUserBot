@@ -5,3 +5,5 @@ __pycache__/
 downloads/
 .vscode/
 error.log
+bin/
+lib/

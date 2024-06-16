@@ -65,9 +65,9 @@ async def alive(_, m):
     uptime = get_readable_time((time.time() - StartTime))
     reply_msg = f"**[Zect](https://github.com/okay-retard/ZectUserBot)**\n"
     reply_msg += f"__Python__: `{__python_version__}`\n"
-    reply_msg += f"__@Pyrogram version__: `{__pyro_version__}`\n"
+    reply_msg += f"Pyrogram Version: `{__pyro_version__}`\n"
     end_time = time.time()
-    reply_msg += f"__Zect uptime__: {uptime}"
+    reply_msg += f"Zect Uptime: {uptime}"
     photo = "https://telegra.ph//file/dcd069c3eb26c9fa3011d.jpg"
     await m.delete()
     if m.reply_to_message:

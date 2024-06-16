@@ -50,8 +50,8 @@ async def new_welcome(client, message):
                 message.chat.id,
                 msg.photo.file_id,
                 caption=men.format(
-                    message.new_chat_members[0]["first_name"],
-                    message.new_chat_members[0]["id"],
+                    message.new_chat_members[0].first_name,
+                    message.new_chat_members[0].id,
                 ),
                 reply_to_message_id=message.id,
             )
@@ -59,9 +59,9 @@ async def new_welcome(client, message):
             await app.send_animation(
                 message.chat.id,
                 msg.animation.file_id,
-                caption=men.format(
-                    message.new_chat_members[0]["first_name"],
-                    message.new_chat_members[0]["id"],
+               caption=men.format(
+                    message.new_chat_members[0].first_name,
+                    message.new_chat_members[0].id,
                 ),
                 reply_to_message_id=message.id,
             )
@@ -78,9 +78,9 @@ async def new_welcome(client, message):
             men = text.replace("{mention}", "[{}](tg://user?id={})")
             await app.send_message(
                 message.chat.id,
-                men.format(
-                    message.new_chat_members[0]["first_name"],
-                    message.new_chat_members[0]["id"],
+                caption=men.format(
+                    message.new_chat_members[0].first_name,
+                    message.new_chat_members[0].id,
                 ),
                 reply_to_message_id=message.id,
             )

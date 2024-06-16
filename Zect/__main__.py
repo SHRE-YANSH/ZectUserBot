@@ -11,8 +11,19 @@ from config import PREFIX
 from Zect import app
 import logging
 from Zect.modules import *
+from urllib.parse import urlparse
+from Zect.helpers.pyrohelper import load_module
 
-app.start()
-me = app.get_me()
-print(f"Zect UserBot started for user {me.id}. Type {PREFIX}help in any telegram chat.")
-idle()
+
+
+async def start():
+    await app.start()
+    me = await app.get_me()
+    logging.info("Deploying Zect UserBot...")
+    logging.info(f"Checking for external modules...")
+    await load_module()
+    logging.info(f"Zect UserBot started for user {me.id}. Type {PREFIX}help in any telegram chat.")
+    await idle()
+
+app.loop.run_until_complete(start())
+
