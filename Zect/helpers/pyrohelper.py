@@ -78,7 +78,8 @@ async def load_module(uri=None):
         raw_url = [uri]
     else:
         modules = await loaderdb.all_modules()
-        raw_url = [module["raw_url"] for module in modules if module['raw_url']]
+        if modules:
+            raw_url = [module["raw_url"] for module in modules if module['raw_url']]
     if not raw_url:
         logging.info("No external modules found.")
         return
