@@ -13,7 +13,7 @@ import logging
 from Zect.modules import *
 from urllib.parse import urlparse
 from Zect.helpers.pyrohelper import load_module
-
+import os
 
 
 async def start():
@@ -23,6 +23,15 @@ async def start():
     logging.info(f"Checking for external modules...")
     await load_module()
     logging.info(f"Zect UserBot started for user {me.id}. Type {PREFIX}help in any telegram chat.")
+    try:
+        with open('temp_message_id.txt', 'r') as f:
+            data_string = f.read()
+    except FileNotFoundError:
+        data_string = ""
+    if data_string:
+        chat_id, message_id = data_string.split(',')
+        await app.edit_message_text(int(chat_id), int(message_id), "Zect UserBot has been restarted successfully.")
+        os.remove('temp_message_id.txt')
     await idle()
 
 app.loop.run_until_complete(start())

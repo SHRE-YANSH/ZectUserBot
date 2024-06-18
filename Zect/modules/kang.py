@@ -217,7 +217,6 @@ async def sticker_pack_info_(client, message):
         f"**Archived:** `{get_stickerset.set.archived}`\n"
         f"**Official:** `{get_stickerset.set.official}`\n"
         f"**Masks:** `{get_stickerset.set.masks}`\n"
-        f"**Animated:** `{get_stickerset.set.animated}`\n"
         f"**Stickers In Pack:** `{get_stickerset.set.count}`\n"
         f"**Emojis In Pack:**\n{' '.join(pack_emojis)}"
     )

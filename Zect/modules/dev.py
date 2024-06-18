@@ -23,6 +23,7 @@ CMD_HELP.update(
 『 **Developer** 』
   `eval` -> A nice tool to test python codes.
   `term` -> Run commands in shell.
+  `restart` -> Restart the bot.
 """
     }
 )
@@ -148,3 +149,12 @@ async def terminal(client, message):
         await message.edit(f"**Output:**\n```{output}```", parse_mode="markdown")
     else:
         await message.edit("**Output:**\n`No Output`")
+
+@app.on_message(filters.command("restart", PREFIX) & filters.me)
+async def restart(client, message):
+    msg = await message.edit("`Restarting...`")
+    data_string = f"{msg.chat.id},{msg.id}"
+    with open('temp_message_id.txt', 'w') as f:
+        f.write(data_string)
+        f.close()
+    os.execl(sys.executable, sys.executable, "-m", "Zect")
