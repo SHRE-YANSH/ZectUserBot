@@ -11,6 +11,10 @@ import sys
 import time
 from pyrogram import Client, errors
 from config import API_HASH, API_ID
+try:
+    from config import SESSION
+except ImportError:
+    SESSION = None
 import logging
 
 
@@ -26,7 +30,7 @@ CMD_HELP = {}
 
 StartTime = time.time()
 
-API_ID = API_ID
-API_HASH = API_HASH
-
-app = Client("zect", api_id=API_ID, api_hash=API_HASH)
+if SESSION:
+    app = Client("zect", api_id=API_ID, api_hash=API_HASH, session_string=SESSION)
+else:
+    app = Client("zect", api_id=API_ID, api_hash=API_HASH)
