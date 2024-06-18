@@ -74,13 +74,14 @@ async def load_module(uri=None):
     module_name = None
     required_packages = []
     modules = await loaderdb.all_modules()
-    if not uri and not modules:
-        logging.info(f"No external modules found.")
-        return
-    elif modules:
-        raw_url = [module["raw_url"] for module in modules]
-    else:
+    if uri:
         raw_url = [uri]
+    else:
+        modules = await loaderdb.all_modules()
+        raw_url = [module["raw_url"] for module in modules if module['raw_url']]
+    if not raw_url:
+        logging.info("No external modules found.")
+        return
     for url in raw_url:
         parsed_url = urlparse(url)
         if not (parsed_url.scheme and parsed_url.netloc):

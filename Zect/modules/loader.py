@@ -19,11 +19,12 @@ CMD_HELP.update(
 @app.on_message(filters.command("install", PREFIX) & filters.me)
 async def install(client, message):
     edit_text = await message.edit("`Installing..`")
-    url = get_arg(message)
-    if url:
-        parsed_url = urlparse(url)
+    raw_url = get_arg(message)
+    if raw_url:
+        parsed_url = urlparse(raw_url)
         if not (parsed_url.scheme and parsed_url.netloc and "raw" in parsed_url.path):
             await edit_text.edit("Invalid URL format. Please provide a valid URL with scheme (http/https) and domain.")
+            return
     elif not message.reply_to_message:
         await message.edit("`Reply to a py file`")
         return
@@ -38,13 +39,13 @@ async def install(client, message):
         with open(file, "r") as f:
             text = f.read()
             f.close()
+        try:
+            raw_url = f'https://spaceb.in/api/v1/documents/{paste(text)}/raw'
+        except Exception as e:
+            print(e)
+            await status_message.delete()
+            return
     status_message = await message.edit("`Installing ...`")
-    try:
-        raw_url = f'https://spaceb.in/api/v1/documents/{paste(text)}/raw'
-    except Exception as e:
-        print(e)
-        await status_message.delete()
-        return
     await load_module(raw_url)
     await status_message.edit("`Installed Successfully`")
     return
