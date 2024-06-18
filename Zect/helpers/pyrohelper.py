@@ -73,13 +73,14 @@ async def welcome_chat(filter, client: Client, message: Message):
 async def load_module(uri=None):
     module_name = None
     required_packages = []
-    modules = await loaderdb.all_modules()
+    raw_url = None
     if uri:
         raw_url = [uri]
     else:
         modules = await loaderdb.all_modules()
         if modules:
             raw_url = [module["raw_url"] for module in modules if module['raw_url']]
+            print(raw_url)
     if not raw_url:
         logging.info("No external modules found.")
         return
@@ -127,7 +128,6 @@ async def load_module(uri=None):
             logging.info(f"Module {module_name} loaded successfully.")
             if uri:
                 await loaderdb.save_module(module_name, url)
-            return module
         except Exception as e:
             raise ImportError(f"Failed to import module: {e}")
         finally:
